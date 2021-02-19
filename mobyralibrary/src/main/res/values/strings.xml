@@ -1,0 +1,6 @@
+<resources>
+    <string name="err1000">Invalid url.</string>
+    <string name="err1001">Unsupported encoding received.</string>
+    <string name="err1002">Invalid protocol.</string>
+    <string name="err1003">IO exception.</string>
+</resources>
