@@ -2,13 +2,17 @@ package com.zitlab.mobyra.library.http;
 
 import com.google.gson.Gson;
 import com.zitlab.mobyra.library.MobyraResponseCallback;
+import com.zitlab.mobyra.library.builder.BaseClientBuilder;
 import com.zitlab.mobyra.library.exception.MobyraError;
 import com.zitlab.mobyra.library.exception.MobyraException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -22,12 +26,23 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public abstract class BaseRestClient {
 
     private Gson gson = new Gson();
+    private BaseClientBuilder builder;
 
     /**
      * The constant JSON.
      */
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
+
+
+    /**
+     * Instantiates a new Base rest client.
+     *
+     * @param builder the builder
+     */
+    public BaseRestClient(BaseClientBuilder builder){
+        this.builder = builder;
+    }
 
     /**
      * Sets authentication.
@@ -36,33 +51,36 @@ public abstract class BaseRestClient {
      */
     protected abstract void setAuthentication(final Map<String, String> authHeaders);
 
-    /**
-     * Sets log level.
-     *
-     * @param level the level
-     */
-    protected abstract void setLogLevel(final HttpLoggingInterceptor.Level level);
-
-
     private OkHttpClient getNewHttpClient(){
-        return new OkHttpClient();
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.valueOf(builder.getLogLevel().name()));
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(builder.getConnectionTimeout(), TimeUnit.SECONDS)
+                .writeTimeout(builder.getWriteTimeout(), TimeUnit.SECONDS)
+                .readTimeout(builder.getReadTimeout(), TimeUnit.SECONDS)
+                .addInterceptor(logging)
+                .build();
+        return client;
     }
 
     /**
      * Get response.
      *
      * @param <T>          the type parameter
-     * @param url          the url
+     * @param path         the path
      * @param responseType the response type
      * @param callback     the callback
      * @return the response
      * @throws IOException the io exception
      */
-    protected <T> void get(final String url, final Class<T> responseType, final MobyraResponseCallback callback) {
-        Request.Builder builder = getHttpBuilder();
-        Request request = builder
-                .url(url)
+    protected <T> void get(final String path, final Class<T> responseType, final MobyraResponseCallback callback) {
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme(builder.getScheme())
+                .host(builder.getHostName())
+                .addPathSegment(path)
                 .build();
+        Request request = getHttpBuilder().url(url).build();
         executeRequest(request, responseType, callback);
     }
 
@@ -71,33 +89,39 @@ public abstract class BaseRestClient {
      * Post response.
      *
      * @param <T>          the type parameter
-     * @param url          the url
+     * @param path         the path
      * @param obj          the obj
      * @param responseType the response type
      * @param callback     the callback
      * @return the response
      * @throws IOException the io exception
      */
-    protected <T> void post(final String url, final Object obj, final Class<T> responseType, final MobyraResponseCallback callback){
+    protected <T> void post(final String path, final Object obj, final Class<T> responseType, final MobyraResponseCallback callback){
         String requestBody = gson.toJson(obj);
-        this.post(url, requestBody, responseType, callback);
+        this.post(path, requestBody, responseType, callback);
     }
 
     /**
      * Post response.
      *
      * @param <T>          the type parameter
-     * @param url          the url
+     * @param path         the path
      * @param jsonData     the json data
      * @param responseType the response type
      * @param callback     the callback
      * @return the response
      * @throws IOException the io exception
      */
-    protected <T> void post(final String url, final String jsonData, final Class<T> responseType, MobyraResponseCallback callback){
+    protected <T> void post(final String path, final String jsonData, final Class<T> responseType, MobyraResponseCallback callback){
+
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme(builder.getScheme())
+                .host(builder.getHostName())
+                .addPathSegment(path)
+                .build();
+
         RequestBody body = RequestBody.create(jsonData, JSON);
-        Request.Builder builder = getHttpBuilder();
-        Request request = builder
+        Request request = getHttpBuilder()
                 .url(url)
                 .post(body)
                 .build();
@@ -109,14 +133,14 @@ public abstract class BaseRestClient {
      * Put.
      *
      * @param <T>          the type parameter
-     * @param url          the url
+     * @param path         the path
      * @param obj          the obj
      * @param responseType the response type
      * @param callback     the callback
      */
-    protected <T> void put(final String url, final Object obj, final Class<T> responseType, final MobyraResponseCallback callback){
+    protected <T> void put(final String path, final Object obj, final Class<T> responseType, final MobyraResponseCallback callback){
         String requestBody = gson.toJson(obj);
-        this.put(url, requestBody, responseType, callback);
+        this.put(path, requestBody, responseType, callback);
     }
 
 
@@ -124,15 +148,21 @@ public abstract class BaseRestClient {
      * Put.
      *
      * @param <T>          the type parameter
-     * @param url          the url
+     * @param path         the path
      * @param jsonData     the json data
      * @param responseType the response type
      * @param callback     the callback
      */
-    protected <T> void put(final String url, final String jsonData, final Class<T> responseType, MobyraResponseCallback callback){
+    protected <T> void put(final String path, final String jsonData, final Class<T> responseType, MobyraResponseCallback callback){
+
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme(builder.getScheme())
+                .host(builder.getHostName())
+                .addPathSegment(path)
+                .build();
+
         RequestBody body = RequestBody.create(jsonData, JSON);
-        Request.Builder builder = getHttpBuilder();
-        Request request = builder
+        Request request = getHttpBuilder()
                 .url(url)
                 .put(body)
                 .build();
@@ -144,15 +174,21 @@ public abstract class BaseRestClient {
      * Delete response.
      *
      * @param <T>          the type parameter
-     * @param url          the url
+     * @param path         the path
      * @param responseType the response type
      * @param callback     the callback
      * @return the response
      * @throws IOException the io exception
      */
-    protected <T> void delete(final String url, final Class<T> responseType, final MobyraResponseCallback callback){
-        Request.Builder builder = getHttpBuilder();
-        Request request = builder
+    protected <T> void delete(final String path, final Class<T> responseType, final MobyraResponseCallback callback){
+
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme(builder.getScheme())
+                .host(builder.getHostName())
+                .addPathSegment(path)
+                .build();
+
+        Request request = getHttpBuilder()
                 .url(url)
                 .delete()
                 .build();

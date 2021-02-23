@@ -1,12 +1,13 @@
 package com.zitlab.mobyra.library;
 
+import android.util.Pair;
+
+import com.zitlab.mobyra.library.annotation.MobyraType;
+import com.zitlab.mobyra.library.builder.CriteriaBuilder;
+import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
 import com.zitlab.mobyra.library.exception.MobyraException;
 import com.zitlab.mobyra.library.http.TupleRestClient;
-import com.zitlab.mobyra.library.pojo.Tuple;
-import com.zitlab.mobyra.library.pojo.TupleFilter;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,20 +19,12 @@ public class MobyraClient extends TupleRestClient {
     /**
      * Instantiates a new Mobyra client.
      *
-     * @param baseUrl  the base url
-     * @param username the username
-     * @param password the password
-     * @param appn     the appn
+     * @param builder the builder
      */
-    public MobyraClient(String baseUrl, String username, String password, String appn) {
-        super(baseUrl, username, password, appn);
+    public MobyraClient(MobyraClientBuilder builder){
+        super(builder);
     }
 
-
-    public <T> void delete(String id, Class<T> valueType, MobyraResponseCallback callback) {
-        String type = getAnnotation(valueType);
-        delete(getUrl(type, id), valueType, callback);
-    }
 
     /**
      * Find by id.
@@ -43,152 +36,99 @@ public class MobyraClient extends TupleRestClient {
      */
     public <T> void findById(String id, Class<T> valueType, MobyraResponseCallback callback) {
         String type = getAnnotation(valueType);
-        get(getUrl(type, id), valueType, callback);
+        get(pathUrl(type, id), valueType, callback);
     }
 
     /**
      * Find unique.
      *
      * @param <T>       the type parameter
+     * @param keyValue  the key value
      * @param valueType the value type
      * @param callback  the callback
      */
-    public <T> void findUnique(Class<T> valueType, MobyraResponseCallback callback) {
-        String type = getAnnotation(valueType);
-        get(uniqueUrl(type), valueType, callback);
+    public <T> void findUnique(Pair<String, String> keyValue, Class<T> valueType, MobyraResponseCallback callback) {
+        CriteriaBuilder criteriaBuilder = new CriteriaBuilder.Builder().keyValue(keyValue.first, keyValue.second).build();
+        findUnique(criteriaBuilder,  valueType, callback);
+    }
+
+    /**
+     * Find unique.
+     *
+     * @param <T>             the type parameter
+     * @param criteriaBuilder the criteria builder
+     * @param responseType    the response type
+     * @param callback        the callback
+     */
+    public <T> void findUnique(CriteriaBuilder criteriaBuilder, Class<T> responseType, MobyraResponseCallback callback) {
+        String type = getAnnotation(responseType);
+        Criteria criteria = new Criteria();
+        criteria.setCriteria(criteriaBuilder.getCriteriaMap());
+        post(uniqueUrl(type), criteria, responseType, callback);
     }
 
     /**
      * Query.
      *
-     * @param <T>       the type parameter
-     * @param filter    the filter
-     * @param valueType the value type
-     * @param callback  the callback
+     * @param <T>             the type parameter
+     * @param criteriaBuilder the criteria builder
+     * @param responseType    the response type
+     * @param callback        the callback
      */
-    public <T> void query(Object filter, Class<T> valueType, MobyraResponseCallback callback) {
-        String type = getAnnotation(valueType);
-        post(queryUrl(type), filter, valueType, callback);
+    public <T> void query(CriteriaBuilder criteriaBuilder, Class<T> responseType, MobyraResponseCallback callback) {
+        String type = getAnnotation(responseType);
+        Criteria criteria = new Criteria();
+        criteria.setCriteria(criteriaBuilder.getCriteriaMap());
+        post(pathUrl(type, null), criteria, responseType, callback);
     }
 
     /**
      * List.
      *
-     * @param <T>       the type parameter
-     * @param filter    the filter
-     * @param valueType the value type
-     * @param callback  the callback
+     * @param <T>             the type parameter
+     * @param criteriaBuilder the criteria builder
+     * @param type            the type
+     * @param responseType    the response type
+     * @param callback        the callback
      */
-    public <T> void list(Object filter, Class<T> valueType, MobyraResponseCallback callback) {
-        String type = getAnnotation(valueType);
-        post(listUrl(type),  filter, valueType, callback);
+    public <T> void list(CriteriaBuilder criteriaBuilder, String type, Class<List<T>> responseType, MobyraResponseCallback callback) {
+        Criteria criteria = new Criteria();
+        if(null != criteriaBuilder) {
+            criteria.setCriteria(criteriaBuilder.getCriteriaMap());
+        }
+        post(listUrl(type), criteria, responseType, callback);
     }
 
     /**
      * Save.
      *
-     * @param <T>       the type parameter
-     * @param obj       the obj
-     * @param valueType the value type
-     * @param callback  the callback
+     * @param <T>          the type parameter
+     * @param objectToSave the object to save
+     * @param responseType the response type
+     * @param callback     the callback
      */
-    public <T> void save(Object obj, Class<T> valueType, MobyraResponseCallback callback) {
-        String type = getAnnotation(valueType);
-        post(getUrl(type), obj, valueType, callback);
+    public <T> void save(Object objectToSave, Class<T> responseType, MobyraResponseCallback callback) {
+        String type = getAnnotation(responseType);
+        post(dataUrl(type), objectToSave, responseType, callback);
     }
 
     /**
      * Save.
      *
-     * @param <T>       the type parameter
-     * @param objs      the objs
-     * @param type      the type
-     * @param valueType the value type
-     * @param callback  the callback
+     * @param <T>              the type parameter
+     * @param objectListToSave the object list to save
+     * @param responseType     the response type
+     * @param callback         the callback
      */
-    public <T> void save(List<T> objs, String type, Class<List<T>> valueType,  MobyraResponseCallback callback) {
-        post(getMultiUrl(type), objs, valueType, callback);
+    public <T> void save(List<Object> objectListToSave, Class<T> responseType, MobyraResponseCallback callback) {
+        String type = getAnnotation(responseType);
+        post(dataUrl(type), objectListToSave, responseType, callback);
     }
 
-    /**
-     * Save.
-     *
-     * @param <T>       the type parameter
-     * @param objs      the objs
-     * @param valueType the value type
-     * @param callback  the callback
-     */
-    public <T> void save(List<Object> objs, Class<T> valueType, MobyraResponseCallback callback) {
+
+    public <T> void delete(String id, Class<T> valueType, MobyraResponseCallback callback) {
         String type = getAnnotation(valueType);
-        post(getMultiUrl(type), objs, valueType, callback);
-    }
-
-    /**
-     * Save.
-     *
-     * @param <T>       the type parameter
-     * @param obj       the obj
-     * @param valueType the value type
-     * @param id        the id
-     * @param callback  the callback
-     * @throws MobyraException the mobyra exception
-     */
-    public <T> void  save(Object obj, Class<T> valueType, String id, MobyraResponseCallback callback) throws MobyraException {
-        if (null == id)
-            throw new MobyraException("'id' cannot be null while saving the data");
-        String type = getAnnotation(valueType);
-        post(getUrl(type, id), obj, valueType, callback);
-    }
-
-    /**
-     * List.
-     *
-     * @param <T>       the type parameter
-     * @param url       the url
-     * @param obj       the obj
-     * @param valueType the value type
-     * @param callback  the callback
-     */
-    public <T> void list(String url, Object obj, Class<List<T>> valueType, MobyraResponseCallback callback){
-        post(customUrl(url), obj, valueType, callback);
-    }
-
-    /**
-     * Post custom.
-     *
-     * @param <T>       the type parameter
-     * @param url       the url
-     * @param obj       the obj
-     * @param valueType the value type
-     * @param callback  the callback
-     */
-    public <T> void postCustom(String url, Object obj, Class<T> valueType, MobyraResponseCallback callback){
-        post(customUrl(url), obj, valueType, callback);
-    }
-
-    /**
-     * Get custom.
-     *
-     * @param <T>       the type parameter
-     * @param url       the url
-     * @param valueType the value type
-     * @param callback  the callback
-     */
-    public <T> void getCustom(String url, Class<T> valueType, MobyraResponseCallback callback){
-       get(customUrl(url), valueType, callback);
-    }
-
-    /**
-     * Execute.
-     *
-     * @param <T>       the type parameter
-     * @param action    the action
-     * @param obj       the obj
-     * @param valueType the value type
-     * @param callback  the callback
-     */
-    public <T> void execute(String action, Object obj, Class<T> valueType, MobyraResponseCallback callback){
-        post(actionUrl(action), obj, valueType, callback);
+        delete(pathUrl(type, id), valueType, callback);
     }
 
     private static String getAnnotation(Class<?> t) {
