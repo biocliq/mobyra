@@ -7,7 +7,7 @@ import okhttp3.Response;
 /**
  * The interface Mobyra response callback.
  */
-public interface MobyraResponseCallback {
+public interface MobyraResponseCallback<T> {
 
     /**
      * On mobyra response.
@@ -17,5 +17,5 @@ public interface MobyraResponseCallback {
      * @param response  the response
      * @param exception the exception
      */
-    <T> void onMobyraResponse(boolean status, T response, MobyraException exception);
+     void onMobyraResponse(boolean status, T response, MobyraException exception);
 }

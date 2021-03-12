@@ -170,7 +170,7 @@ public class TupleRestClient extends BaseRestClient {
 
 	private StringBuilder getContextPath(){
 		StringBuilder sb = new StringBuilder();
-		sb.append(FORWARD_SLASH).append(appName)
+		sb.append(appName)
 				.append(FORWARD_SLASH).append(KEY_API)
 				.append(FORWARD_SLASH).append(apiVersion)
 				.append(FORWARD_SLASH).append(context);

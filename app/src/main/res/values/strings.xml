@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Mobyra</string>
+    <string name="dummy_button">SKIP</string>
+    <string name="splash_content">Mobyra</string>
+    <string name="splash_sub_content">Biocliq</string>
+    <string name="txt_student">Student</string>
+    <string name="txt_marks">Marks</string>
+    <string name="txt_api_list">APIs List</string>
+    <string name="txt_host_name">Host name</string>
+    <string name="txt_app_name">API App name</string>
+    <string name="txt_context_name">API Context name</string>
+    <string name="txt_settings">Settings</string>
 </resources>

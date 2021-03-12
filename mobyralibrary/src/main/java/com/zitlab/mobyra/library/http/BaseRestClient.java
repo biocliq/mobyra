@@ -1,14 +1,20 @@
 package com.zitlab.mobyra.library.http;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.google.gson.Gson;
 import com.zitlab.mobyra.library.MobyraResponseCallback;
-import com.zitlab.mobyra.library.builder.BaseClientBuilder;
+import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
 import com.zitlab.mobyra.library.exception.MobyraError;
 import com.zitlab.mobyra.library.exception.MobyraException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -26,7 +32,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public abstract class BaseRestClient {
 
     private Gson gson = new Gson();
-    private BaseClientBuilder builder;
+    private MobyraClientBuilder builder;
 
     /**
      * The constant JSON.
@@ -40,7 +46,7 @@ public abstract class BaseRestClient {
      *
      * @param builder the builder
      */
-    public BaseRestClient(BaseClientBuilder builder){
+    public BaseRestClient(MobyraClientBuilder builder){
         this.builder = builder;
     }
 
@@ -60,7 +66,9 @@ public abstract class BaseRestClient {
                 .writeTimeout(builder.getWriteTimeout(), TimeUnit.SECONDS)
                 .readTimeout(builder.getReadTimeout(), TimeUnit.SECONDS)
                 .addInterceptor(logging)
+                .hostnameVerifier((hostname, session) -> true)
                 .build();
+
         return client;
     }
 
@@ -217,14 +225,35 @@ public abstract class BaseRestClient {
                 if(isSuccess){
                     try {
                         T obj = deserialize(response, valueType);
-                        callback.onMobyraResponse(true, obj, null);
+                        sendCallbackOnUIThread(callback, true, obj, null);
+                        //callback.onMobyraResponse(true, obj, null);
                     } catch (MobyraException e) {
                         e.printStackTrace();
-                        callback.onMobyraResponse(false, null, e);
+                        sendCallbackOnUIThread(callback, false, null, e);
+                        //callback.onMobyraResponse(false, null, e);
                     }
                 }else{
-                    callback.onMobyraResponse(false, null, new MobyraException(response.code(), response.message()));
+                    sendCallbackOnUIThread(callback, false, null, new MobyraException(response.code(), response.message()));
+                    //callback.onMobyraResponse(false, null, new MobyraException(response.code(), response.message()));
                 }
+            }
+        });
+    }
+
+    /**
+     * Sends callback on main thread.
+     *
+     * @param callback
+     * @param status
+     * @param response
+     * @param ex
+     * @param <T>
+     */
+    private <T> void sendCallbackOnUIThread(MobyraResponseCallback callback, boolean status, T response, MobyraException ex){
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                callback.onMobyraResponse(status, response, ex);
             }
         });
     }

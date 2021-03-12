@@ -138,4 +138,11 @@ public class CriteriaBuilder {
     public Map<String, String> getCriteriaMap() {
         return criteriaMap;
     }
+
+    @Override
+    public String toString() {
+        return "CriteriaBuilder{" +
+                "criteriaMap: " + criteriaMap +
+                '}';
+    }
 }
