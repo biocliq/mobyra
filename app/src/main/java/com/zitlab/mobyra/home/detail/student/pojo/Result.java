@@ -3,7 +3,12 @@ package com.zitlab.mobyra.home.detail.student.pojo;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.zitlab.mobyra.home.detail.marks.pojo.Marks;
+import com.zitlab.mobyra.library.annotation.MobyraType;
 
+import java.util.List;
+
+@MobyraType("student")
 public class Result {
 
     @SerializedName("id")
@@ -24,6 +29,9 @@ public class Result {
     @SerializedName("lastAttendedOn")
     @Expose
     private String lastAttendedOn;
+    @SerializedName("marks")
+    @Expose
+    private List<com.zitlab.mobyra.home.detail.marks.pojo.Result> marks;
 
     public int getId() {
         return id;
@@ -71,6 +79,14 @@ public class Result {
 
     public void setLastAttendedOn(String lastAttendedOn) {
         this.lastAttendedOn = lastAttendedOn;
+    }
+
+    public List<com.zitlab.mobyra.home.detail.marks.pojo.Result> getMarks() {
+        return marks;
+    }
+
+    public void setMarks(List<com.zitlab.mobyra.home.detail.marks.pojo.Result> marks) {
+        this.marks = marks;
     }
 
     @Override

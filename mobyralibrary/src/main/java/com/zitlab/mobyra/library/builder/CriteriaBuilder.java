@@ -77,6 +77,12 @@ public class CriteriaBuilder {
             return this;
         }
 
+        public Builder keyValueContains(final String key, final String value){
+            String condition = String.format("_%s*", value);
+            criteriaMap.put(key, condition);
+            return this;
+        }
+
         /**
          * Key value less than builder.
          *
