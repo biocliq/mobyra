@@ -1,22 +1,22 @@
-package com.zitlab.mobyra.home.detail;
-
-import androidx.recyclerview.widget.RecyclerView;
+package com.zitlab.mobyra.home.detail.student;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.zitlab.mobyra.R;
-import com.zitlab.mobyra.home.detail.pojo.marks.Result;
+import com.zitlab.mobyra.home.detail.student.pojo.Result;
 
 import java.util.List;
 
-public class ItemDetailsRecyclerViewAdapter extends RecyclerView.Adapter<ItemDetailsRecyclerViewAdapter.ViewHolder> {
+public class StudentItemDetailsRecyclerViewAdapter extends RecyclerView.Adapter<StudentItemDetailsRecyclerViewAdapter.ViewHolder> {
 
     private final List<Result> mValues;
 
-    public ItemDetailsRecyclerViewAdapter(List<Result> items) {
+    public StudentItemDetailsRecyclerViewAdapter(List<Result> items) {
         mValues = items;
     }
 
@@ -31,7 +31,7 @@ public class ItemDetailsRecyclerViewAdapter extends RecyclerView.Adapter<ItemDet
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText("" + mValues.get(position).getId());
-        holder.mContentView.setText("Exam: " + mValues.get(position).getExam());
+        holder.mContentView.setText("Name: " + mValues.get(position).getStudentName());
         holder.mContentSubTitle.setText("Student Code: " + mValues.get(position).getStudentCode());
         holder.mContentObject.setText(mValues.get(position).toString());
     }

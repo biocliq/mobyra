@@ -1,5 +1,5 @@
 
-package com.zitlab.mobyra.home.detail.pojo.marks;
+package com.zitlab.mobyra.home.detail.marks.pojo;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

@@ -1,4 +1,4 @@
-package com.zitlab.mobyra.home.detail;
+package com.zitlab.mobyra.home.detail.marks;
 
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Pair;
@@ -10,12 +10,12 @@ import com.zitlab.mobyra.R;
 import com.zitlab.mobyra.home.detail.student.StudentItemFragment;
 import java.util.List;
 
-public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder> {
+public class MarksItemRecyclerViewAdapter extends RecyclerView.Adapter<MarksItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<Pair<String, String>> mValues;
     StudentItemFragment.OnCardClickListner onCardClickListner;
 
-    public ItemRecyclerViewAdapter(List<Pair<String, String>> items) {
+    public MarksItemRecyclerViewAdapter(List<Pair<String, String>> items) {
         mValues = items;
     }
 

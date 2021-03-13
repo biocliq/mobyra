@@ -6,6 +6,8 @@
     <string name="txt_student">Student</string>
     <string name="txt_marks">Marks</string>
     <string name="txt_api_list">APIs List</string>
+    <string name="txt_marks_api_list">Marks APIs List</string>
+    <string name="txt_students_api_list">Student APIs List</string>
     <string name="txt_host_name">Host name</string>
     <string name="txt_app_name">API App name</string>
     <string name="txt_context_name">API Context name</string>

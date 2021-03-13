@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zitlab.mobyra.BaseActivity;
 import com.zitlab.mobyra.R;
 import com.zitlab.mobyra.home.apis.APIContent;
-import com.zitlab.mobyra.home.detail.ItemDetailsFragment;
-import com.zitlab.mobyra.home.detail.ItemRecyclerViewAdapter;
+import com.zitlab.mobyra.home.detail.marks.MarksItemDetailsFragment;
+import com.zitlab.mobyra.home.detail.marks.MarksItemRecyclerViewAdapter;
 import com.zitlab.mobyra.home.dialog.SettingsDialogFragment;
 
 /**
@@ -67,16 +67,16 @@ public class StudentItemFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             //recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
 
-            ItemRecyclerViewAdapter adapter = new ItemRecyclerViewAdapter(APIContent.ITEMS_MARKS);
+            StudentItemRecyclerViewAdapter adapter = new StudentItemRecyclerViewAdapter(APIContent.ITEMS_STUDENTS);
             recyclerView.setAdapter(adapter);
             adapter.setCardClickListener((view1, position) -> {
-                ItemDetailsFragment fragment = ItemDetailsFragment.newInstance(position);
+                StudentItemDetailsFragment fragment = StudentItemDetailsFragment.newInstance(position);
                 ((BaseActivity) getActivity()).replaceFragment(R.id.fragmentContainer, fragment,
-                        ItemDetailsFragment.class.getSimpleName(), ItemDetailsFragment.class.getSimpleName());
+                        StudentItemDetailsFragment.class.getSimpleName(), StudentItemDetailsFragment.class.getSimpleName());
             });
         }
 
-        getActivity().setTitle(getString(R.string.txt_api_list));
+        getActivity().setTitle(getString(R.string.txt_students_api_list));
         ((BaseActivity) getActivity()).showBackButton();
 
         return view;

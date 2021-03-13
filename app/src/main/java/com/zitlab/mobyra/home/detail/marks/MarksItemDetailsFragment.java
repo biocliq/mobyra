@@ -1,4 +1,4 @@
-package com.zitlab.mobyra.home.detail;
+package com.zitlab.mobyra.home.detail.marks;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,15 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.zitlab.mobyra.R;
-import com.zitlab.mobyra.home.detail.pojo.marks.Marks;
-import com.zitlab.mobyra.home.detail.pojo.marks.Result;
+import com.zitlab.mobyra.home.detail.marks.pojo.Marks;
+import com.zitlab.mobyra.home.detail.marks.pojo.Result;
 import com.zitlab.mobyra.library.MobyraClient;
 import com.zitlab.mobyra.library.MobyraResponseCallback;
 import com.zitlab.mobyra.library.builder.CriteriaBuilder;
 import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,24 +29,24 @@ import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 /**
  * A fragment representing a list of Items.
  */
-public class ItemDetailsFragment extends Fragment {
+public class MarksItemDetailsFragment extends Fragment {
 
     private static final String ARG_ROW_INDEX = "column-count";
     private int mRowIndex = 1;
 
     private List<Result> items = new ArrayList<>();
-    private  ItemDetailsRecyclerViewAdapter adapter = null;
+    private MarksItemDetailsRecyclerViewAdapter adapter = null;
     private RecyclerView recyclerView = null;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ItemDetailsFragment() {
+    public MarksItemDetailsFragment() {
     }
 
     @SuppressWarnings("unused")
-    public static ItemDetailsFragment newInstance(int columnCount) {
-        ItemDetailsFragment fragment = new ItemDetailsFragment();
+    public static MarksItemDetailsFragment newInstance(int columnCount) {
+        MarksItemDetailsFragment fragment = new MarksItemDetailsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_ROW_INDEX, columnCount);
         fragment.setArguments(args);
@@ -77,7 +75,7 @@ public class ItemDetailsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         //recyclerView.setLayoutManager(new GridLayoutManager(context, mRowIndex));
 
-        adapter = new ItemDetailsRecyclerViewAdapter(items);
+        adapter = new MarksItemDetailsRecyclerViewAdapter(items);
         recyclerView.setAdapter(adapter);
 
 
@@ -124,7 +122,7 @@ public class ItemDetailsFragment extends Fragment {
                 if(adapter != null) {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         public void run() {
-                            adapter = new ItemDetailsRecyclerViewAdapter(items);
+                            adapter = new MarksItemDetailsRecyclerViewAdapter(items);
                             recyclerView.setAdapter(adapter);
                             //adapter.notifyDataSetChanged();
                         }

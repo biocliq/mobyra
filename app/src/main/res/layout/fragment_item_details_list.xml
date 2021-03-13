@@ -19,7 +19,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context=".home.detail.ItemDetailsFragment"
+        tools:context=".home.detail.marks.MarksItemDetailsFragment"
         tools:listitem="@layout/fragment_item_details" />
 
 </LinearLayout>
