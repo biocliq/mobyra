@@ -1,22 +1,15 @@
 package com.zitlab.mobyra.home.detail;
 
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.zitlab.mobyra.R;
-import com.zitlab.mobyra.home.apis.APIContent.DummyItem;
 import com.zitlab.mobyra.home.detail.student.StudentItemFragment;
-
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<Pair<String, String>> mValues;
