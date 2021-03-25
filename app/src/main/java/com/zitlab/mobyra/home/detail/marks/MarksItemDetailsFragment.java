@@ -3,17 +3,15 @@ package com.zitlab.mobyra.home.detail.marks;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import com.zitlab.mobyra.R;
 import com.zitlab.mobyra.home.detail.marks.pojo.Marks;
 import com.zitlab.mobyra.home.detail.marks.pojo.Result;
@@ -21,6 +19,7 @@ import com.zitlab.mobyra.library.MobyraClient;
 import com.zitlab.mobyra.library.MobyraResponseCallback;
 import com.zitlab.mobyra.library.builder.CriteriaBuilder;
 import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +36,7 @@ public class MarksItemDetailsFragment extends Fragment {
     private List<Result> items = new ArrayList<>();
     private MarksItemDetailsRecyclerViewAdapter adapter = null;
     private RecyclerView recyclerView = null;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -119,14 +119,10 @@ public class MarksItemDetailsFragment extends Fragment {
 
             if (status) {
                 items = response.getResult();
-                if(adapter != null) {
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        public void run() {
-                            adapter = new MarksItemDetailsRecyclerViewAdapter(items);
-                            recyclerView.setAdapter(adapter);
-                            //adapter.notifyDataSetChanged();
-                        }
-                    });
+                if (adapter != null) {
+                    adapter = new MarksItemDetailsRecyclerViewAdapter(items);
+                    recyclerView.setAdapter(adapter);
+                    //adapter.notifyDataSetChanged();
                 }
             } else {
                 MaterialDialog mDialog = new MaterialDialog.Builder(getActivity())
