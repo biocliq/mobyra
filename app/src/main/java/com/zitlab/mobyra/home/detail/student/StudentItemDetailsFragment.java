@@ -13,13 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zitlab.mobyra.R;
-import com.zitlab.mobyra.home.detail.student.pojo.Result;
+import com.zitlab.mobyra.home.detail.marks.pojo.Marks;
 import com.zitlab.mobyra.home.detail.student.pojo.Student;
 import com.zitlab.mobyra.library.MobyraClient;
 import com.zitlab.mobyra.library.MobyraResponseCallback;
 import com.zitlab.mobyra.library.builder.CriteriaBuilder;
 import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
 import com.zitlab.mobyra.library.exception.MobyraException;
+import com.zitlab.mobyra.library.pojo.QueryResultSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class StudentItemDetailsFragment extends Fragment {
     private static final String ARG_ROW_INDEX = "column-count";
     private int mRowIndex = 1;
 
-    private List<Result> items = new ArrayList<>();
+    private List<Student> items = new ArrayList<>();
     private StudentItemDetailsRecyclerViewAdapter adapter = null;
     private RecyclerView recyclerView = null;
 
@@ -101,7 +102,7 @@ public class StudentItemDetailsFragment extends Fragment {
             criteriaBuilder = new CriteriaBuilder.Builder()
                     .build();
             criteriaText.setText("Criteria: " + criteriaBuilder.toString());
-            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
+            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<QueryResultSet<Student>>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -121,7 +122,7 @@ public class StudentItemDetailsFragment extends Fragment {
                     .keyValue("studentCode", "SD9000")
                     .build();
             criteriaText.setText("Criteria: " + criteriaBuilder.toString());
-            mobyraClient.findUnique(criteriaBuilder, Result.class, (MobyraResponseCallback<Result>) (status, response, exception) -> {
+            mobyraClient.findUnique(criteriaBuilder, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -139,7 +140,7 @@ public class StudentItemDetailsFragment extends Fragment {
                     .keyValueGreaterThan("dob", "2010-03-01")
                     .build();
             criteriaText.setText("Criteria: " + criteriaBuilder.toString());
-            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
+            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<QueryResultSet<Student>>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -156,7 +157,7 @@ public class StudentItemDetailsFragment extends Fragment {
                     .keyValueBetween("dob", "2010-02-01", "2013-02-01")
                     .build();
             criteriaText.setText("Criteria: " + criteriaBuilder.toString());
-            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
+            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<QueryResultSet<Student>>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -173,7 +174,7 @@ public class StudentItemDetailsFragment extends Fragment {
                     .keyValue("studentName", "JOHN")
                     .build();
             criteriaText.setText("Criteria: " + criteriaBuilder.toString());
-            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
+            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<QueryResultSet<Student>>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -190,7 +191,7 @@ public class StudentItemDetailsFragment extends Fragment {
                     .keyValueContains("studentName", "O")
                     .build();
             criteriaText.setText("Criteria: " + criteriaBuilder.toString());
-            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
+            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<QueryResultSet<Student>>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -204,14 +205,14 @@ public class StudentItemDetailsFragment extends Fragment {
             });
         } else if (mRowIndex == 7) {
 
-            Result result = new Result();
+            Student result = new Student();
             result.setStudentName("JOHN");
             result.setStudentCode("SD9000");
             result.setStudentClass("5");
             result.setDob("2010-01-02");
             criteriaText.setText("Request object: " + result.toString());
 
-            mobyraClient.save(result, Result.class, (MobyraResponseCallback<Result>) (status, response, exception) -> {
+            mobyraClient.save(result, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -226,13 +227,13 @@ public class StudentItemDetailsFragment extends Fragment {
                 }
             });
         } else if (mRowIndex == 8) {
-            Result result = new Result();
+            Student result = new Student();
             result.setStudentName("JOHN");
             result.setStudentCode("SD9000");
             result.setStudentClass("5");
             result.setDob("2010-01-02");
 
-            com.zitlab.mobyra.home.detail.marks.pojo.Result marks = new com.zitlab.mobyra.home.detail.marks.pojo.Result();
+            Marks marks = new Marks();
             marks.setExam("EX03");
             marks.setEnglish(90);
             marks.setMaths(85);
@@ -240,12 +241,11 @@ public class StudentItemDetailsFragment extends Fragment {
             marks.setTamil(86);
             marks.setHistory(75);
 
-            List<com.zitlab.mobyra.home.detail.marks.pojo.Result> marksList = new ArrayList<>();
+            List<Marks> marksList = new ArrayList<>();
             marksList.add(marks);
-            result.setMarks(marksList);
-            criteriaText.setText("Request object: " + result.toString());
 
-            mobyraClient.save(result, Result.class, (MobyraResponseCallback<Result>) (status, response, exception) -> {
+            criteriaText.setText("Request object: " + marksList.toString());
+            mobyraClient.save(result, Marks.class, (MobyraResponseCallback<Marks>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -258,14 +258,14 @@ public class StudentItemDetailsFragment extends Fragment {
                 }
             });
         } else if (mRowIndex == 9) {
-            Result result = new Result();
+            Student result = new Student();
             result.setStudentName("JOHN");
             result.setStudentCode("SD9000");
             result.setStudentClass("5");
             result.setDob("2010-01-02");
             criteriaText.setText("Request object: " + result.toString());
 
-            mobyraClient.save(result, Result.class, (MobyraResponseCallback<Result>) (status, response, exception) -> {
+            mobyraClient.save(result, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -280,14 +280,14 @@ public class StudentItemDetailsFragment extends Fragment {
                 }
             });
         } else if (mRowIndex == 10) {
-            Result result = new Result();
+            Student result = new Student();
             result.setStudentName("JOHN");
             result.setStudentCode("SD9000");
             result.setStudentClass("5");
             result.setDob("2010-01-02");
             criteriaText.setText("Request object: " + result.toString());
 
-            mobyraClient.save(result, Result.class, (MobyraResponseCallback<Result>) (status, response, exception) -> {
+            mobyraClient.save(result, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -303,7 +303,7 @@ public class StudentItemDetailsFragment extends Fragment {
             });
         } else {
             criteriaBuilder = new CriteriaBuilder.Builder().build();
-            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
+            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<QueryResultSet<Student>>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {

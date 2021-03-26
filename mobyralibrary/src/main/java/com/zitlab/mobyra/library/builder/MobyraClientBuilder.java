@@ -5,11 +5,29 @@ package com.zitlab.mobyra.library.builder;
  */
 public final class MobyraClientBuilder {
 
+    /**
+     * The Host name.
+     */
     protected String hostName;
+    /**
+     * The Scheme.
+     */
     protected String scheme = "https";
+    /**
+     * The Connection timeout.
+     */
     protected int connectionTimeout = 60;
+    /**
+     * The Write timeout.
+     */
     protected int writeTimeout = 60;
+    /**
+     * The Read timeout.
+     */
     protected int readTimeout = 60;
+    /**
+     * The Log level.
+     */
     protected LogLevel logLevel = LogLevel.BASIC;
 
     private String userName;
@@ -146,11 +164,29 @@ public final class MobyraClientBuilder {
      * The type Builder.
      */
     public static class Builder {
+        /**
+         * The Host name.
+         */
         protected String hostName;
+        /**
+         * The Scheme.
+         */
         protected String scheme = "http";
+        /**
+         * The Connection timeout.
+         */
         protected int connectionTimeout;
+        /**
+         * The Write timeout.
+         */
         protected int writeTimeout;
+        /**
+         * The Read timeout.
+         */
         protected int readTimeout;
+        /**
+         * The Log level.
+         */
         protected LogLevel logLevel;
         private String userName;
         private String password;
@@ -191,6 +227,12 @@ public final class MobyraClientBuilder {
             return this;
         }
 
+        /**
+         * With api version builder.
+         *
+         * @param apiVersion the api version
+         * @return the builder
+         */
         public Builder withApiVersion(String apiVersion) {
             this.apiVersion = apiVersion;
             return this;
@@ -262,6 +304,11 @@ public final class MobyraClientBuilder {
             return this;
         }
 
+        /**
+         * Build mobyra client builder.
+         *
+         * @return the mobyra client builder
+         */
         public MobyraClientBuilder build() {
             //Here we create the actual bank account object, which is always in a fully initialised state when it's returned.
             MobyraClientBuilder builder = new MobyraClientBuilder();  //Since the builder is in the BankAccount class, we can invoke its private constructor.

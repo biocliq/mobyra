@@ -57,6 +57,13 @@ public class CriteriaBuilder {
             return this;
         }
 
+        /**
+         * Key value builder.
+         *
+         * @param key   the key
+         * @param value the value
+         * @return the builder
+         */
         public Builder keyValue(final String key, final Number value) {
             criteriaMap.put(key, String.valueOf(value));
             return this;

@@ -6,15 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.zitlab.mobyra.R;
-import com.zitlab.mobyra.home.detail.marks.pojo.Result;
-
+import com.zitlab.mobyra.home.detail.marks.pojo.Marks;
 import java.util.List;
 
 public class MarksItemDetailsRecyclerViewAdapter extends RecyclerView.Adapter<MarksItemDetailsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Result> mValues;
+    private final List<Marks> mValues;
 
-    public MarksItemDetailsRecyclerViewAdapter(List<Result> items) {
+    public MarksItemDetailsRecyclerViewAdapter(List<Marks> items) {
         mValues = items;
     }
 
@@ -43,7 +42,7 @@ public class MarksItemDetailsRecyclerViewAdapter extends RecyclerView.Adapter<Ma
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView, mContentSubTitle, mContentObject;
-        public Result mItem;
+        public Marks mItem;
 
         public ViewHolder(View view) {
             super(view);

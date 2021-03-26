@@ -9,58 +9,106 @@ import com.zitlab.mobyra.library.annotation.MobyraType;
 @MobyraType("marks")
 public class Marks {
 
-    @SerializedName("result")
+    @SerializedName("id")
     @Expose
-    private List<Result> result = null;
-    @SerializedName("limit")
+    private int id;
+    @SerializedName("exam")
     @Expose
-    private int limit;
-    @SerializedName("offset")
+    private String exam;
+    @SerializedName("studentCode")
     @Expose
-    private int offset;
-    @SerializedName("total")
+    private String studentCode;
+    @SerializedName("english")
     @Expose
-    private int total;
+    private float english;
+    @SerializedName("maths")
+    @Expose
+    private float maths;
+    @SerializedName("science")
+    @Expose
+    private float science;
+    @SerializedName("tamil")
+    @Expose
+    private float tamil;
+    @SerializedName("history")
+    @Expose
+    private float history;
 
-    public List<Result> getResult() {
-        return result;
+    public int getId() {
+        return id;
     }
 
-    public void setResult(List<Result> result) {
-        this.result = result;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getLimit() {
-        return limit;
+    public String getExam() {
+        return exam;
     }
 
-    public void setLimit(int limit) {
-        this.limit = limit;
+    public void setExam(String exam) {
+        this.exam = exam;
     }
 
-    public int getOffset() {
-        return offset;
+    public String getStudentCode() {
+        return studentCode;
     }
 
-    public void setOffset(int offset) {
-        this.offset = offset;
+    public void setStudentCode(String studentCode) {
+        this.studentCode = studentCode;
     }
 
-    public int getTotal() {
-        return total;
+    public float getEnglish() {
+        return english;
     }
 
-    public void setTotal(int total) {
-        this.total = total;
+    public void setEnglish(float english) {
+        this.english = english;
+    }
+
+    public float getMaths() {
+        return maths;
+    }
+
+    public void setMaths(float maths) {
+        this.maths = maths;
+    }
+
+    public float getScience() {
+        return science;
+    }
+
+    public void setScience(float science) {
+        this.science = science;
+    }
+
+    public float getTamil() {
+        return tamil;
+    }
+
+    public void setTamil(float tamil) {
+        this.tamil = tamil;
+    }
+
+    public float getHistory() {
+        return history;
+    }
+
+    public void setHistory(float history) {
+        this.history = history;
     }
 
     @Override
     public String toString() {
-        return "Marks{" +
-                "result=" + result +
-                ", limit=" + limit +
-                ", offset=" + offset +
-                ", total=" + total +
+        return "Marks {" +
+                "id=" + id +
+                ", exam='" + exam + '\'' +
+                ", studentCode='" + studentCode + '\'' +
+                ", english=" + english +
+                ", maths=" + maths +
+                ", science=" + science +
+                ", tamil=" + tamil +
+                ", history=" + history +
                 '}';
     }
 }

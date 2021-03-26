@@ -8,59 +8,83 @@ import com.zitlab.mobyra.library.annotation.MobyraType;
 
 @MobyraType("student")
 public class Student {
-
-    @SerializedName("result")
+    @SerializedName("id")
     @Expose
-    private List<Result> result = null;
-    @SerializedName("limit")
+    private int id;
+    @SerializedName("studentName")
     @Expose
-    private int limit;
-    @SerializedName("offset")
+    private String studentName;
+    @SerializedName("dob")
     @Expose
-    private int offset;
-    @SerializedName("total")
+    private String dob;
+    @SerializedName("studentCode")
     @Expose
-    private int total;
+    private String studentCode;
+    @SerializedName("studentClass")
+    @Expose
+    private String studentClass;
+    @SerializedName("lastAttendedOn")
+    @Expose
+    private String lastAttendedOn;
 
-    public List<Result> getResult() {
-        return result;
+    public int getId() {
+        return id;
     }
 
-    public void setResult(List<Result> result) {
-        this.result = result;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getLimit() {
-        return limit;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setLimit(int limit) {
-        this.limit = limit;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
-    public int getOffset() {
-        return offset;
+    public String getDob() {
+        return dob;
     }
 
-    public void setOffset(int offset) {
-        this.offset = offset;
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 
-    public int getTotal() {
-        return total;
+    public String getStudentCode() {
+        return studentCode;
     }
 
-    public void setTotal(int total) {
-        this.total = total;
+    public void setStudentCode(String studentCode) {
+        this.studentCode = studentCode;
+    }
+
+    public String getStudentClass() {
+        return studentClass;
+    }
+
+    public void setStudentClass(String studentClass) {
+        this.studentClass = studentClass;
+    }
+
+    public String getLastAttendedOn() {
+        return lastAttendedOn;
+    }
+
+    public void setLastAttendedOn(String lastAttendedOn) {
+        this.lastAttendedOn = lastAttendedOn;
     }
 
     @Override
     public String toString() {
         return "Student{" +
-                "result=" + result +
-                ", limit=" + limit +
-                ", offset=" + offset +
-                ", total=" + total +
+                "id=" + id +
+                ", studentName='" + studentName + '\'' +
+                ", dob='" + dob + '\'' +
+                ", studentCode='" + studentCode + '\'' +
+                ", studentClass='" + studentClass + '\'' +
+                ", lastAttendedOn='" + lastAttendedOn + '\'' +
                 '}';
     }
+
 }

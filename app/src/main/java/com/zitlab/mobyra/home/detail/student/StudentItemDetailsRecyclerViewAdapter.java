@@ -8,15 +8,15 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zitlab.mobyra.R;
-import com.zitlab.mobyra.home.detail.student.pojo.Result;
+import com.zitlab.mobyra.home.detail.student.pojo.Student;
 
 import java.util.List;
 
 public class StudentItemDetailsRecyclerViewAdapter extends RecyclerView.Adapter<StudentItemDetailsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Result> mValues;
+    private final List<Student> mValues;
 
-    public StudentItemDetailsRecyclerViewAdapter(List<Result> items) {
+    public StudentItemDetailsRecyclerViewAdapter(List<Student> items) {
         mValues = items;
     }
 
@@ -45,7 +45,7 @@ public class StudentItemDetailsRecyclerViewAdapter extends RecyclerView.Adapter<
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView, mContentSubTitle, mContentObject;
-        public Result mItem;
+        public Student mItem;
 
         public ViewHolder(View view) {
             super(view);
