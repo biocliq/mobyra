@@ -20,6 +20,7 @@ import com.zitlab.mobyra.library.MobyraResponseCallback;
 import com.zitlab.mobyra.library.builder.CriteriaBuilder;
 import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
 import com.zitlab.mobyra.library.exception.MobyraException;
+import com.zitlab.mobyra.library.pojo.FieldCriteriaQueryFilter;
 import com.zitlab.mobyra.library.pojo.QueryResultSet;
 
 import java.util.ArrayList;
@@ -121,8 +122,10 @@ public class StudentItemDetailsFragment extends Fragment {
             criteriaBuilder = new CriteriaBuilder.Builder()
                     .keyValue("studentCode", "SD9000")
                     .build();
+            FieldCriteriaQueryFilter queryFilter = new FieldCriteriaQueryFilter();
+            queryFilter.setCriteria(criteriaBuilder);
             criteriaText.setText("Criteria: " + criteriaBuilder.toString());
-            mobyraClient.findUnique(criteriaBuilder, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
+            mobyraClient.findUnique(queryFilter, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {

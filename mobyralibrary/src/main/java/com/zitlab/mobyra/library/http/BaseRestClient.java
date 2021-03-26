@@ -9,6 +9,8 @@ import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
 import com.zitlab.mobyra.library.exception.MobyraError;
 import com.zitlab.mobyra.library.exception.MobyraException;
 import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -104,7 +106,7 @@ public abstract class BaseRestClient {
      * @return the response
      * @throws IOException the io exception
      */
-    protected <T> void post(final String path, final Object obj, final Class<T> responseType, final MobyraResponseCallback callback){
+    protected <T> void post(final String path, final Object obj, final Type responseType, final MobyraResponseCallback callback){
         String requestBody = gson.toJson(obj);
         this.post(path, requestBody, responseType, callback);
     }
@@ -120,7 +122,7 @@ public abstract class BaseRestClient {
      * @return the response
      * @throws IOException the io exception
      */
-    protected <T> void post(final String path, final String jsonData, final Class<T> responseType, MobyraResponseCallback callback){
+    protected <T> void post(final String path, final String jsonData, final Type responseType, MobyraResponseCallback callback){
 
         HttpUrl url = new HttpUrl.Builder()
                 .scheme(builder.getScheme())
@@ -214,7 +216,7 @@ public abstract class BaseRestClient {
         return builder;
     }
 
-    private <T> void executeRequest(Request request, Class<T> valueType, MobyraResponseCallback callback){
+    private <T> void executeRequest(Request request, Type valueType, MobyraResponseCallback callback){
         getNewHttpClient().newCall(request).enqueue(new Callback() {
             @Override public void onFailure(Call call, IOException e) {
                 callback.onMobyraResponse(false, Object.class, new MobyraException(e));
@@ -267,7 +269,7 @@ public abstract class BaseRestClient {
      * @return the t
      * @throws MobyraException the mobyra exception
      */
-    protected final <T> T deserialize(Response response, Class<T> valueType) throws MobyraException {
+    protected final <T> T deserialize(Response response, Type valueType) throws MobyraException {
         try {
             return this.deserialize(response.body().string(), valueType);
         }catch (IOException e){
@@ -284,7 +286,33 @@ public abstract class BaseRestClient {
      * @return the t
      * @throws IOException the io exception
      */
-    protected final <T> T deserialize(String response, Class<T> valueType) {
+    protected final <T> T deserialize(String response, Type valueType) {
         return gson.fromJson(response, valueType);
+    }
+
+    /**
+     * Gets type.
+     *
+     * @param rawClass  the raw class
+     * @param parameter the parameter
+     * @return the type
+     */
+    protected Type getType(Class<?> rawClass, Class<?> parameter) {
+        return new ParameterizedType() {
+            @Override
+            public Type[] getActualTypeArguments() {
+                return new Type[]{parameter};
+            }
+
+            @Override
+            public Type getRawType() {
+                return rawClass;
+            }
+
+            @Override
+            public Type getOwnerType() {
+                return null;
+            }
+        };
     }
 }

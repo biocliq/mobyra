@@ -52,11 +52,11 @@ public class MobyraClient extends TupleRestClient {
      * @param responseType    the response type
      * @param callback        the callback
      */
-    public <T> void query(CriteriaBuilder criteriaBuilder, Class<T> responseType, MobyraResponseCallback callback) {
+    public <T> void query(CriteriaBuilder criteriaBuilder, Class<T> responseType, MobyraResponseCallback<QueryResultSet<T>> callback) {
         String type = getAnnotation(responseType);
         Criteria criteria = new Criteria();
-        criteria.setCriteria(criteriaBuilder.getCriteriaMap());
-        post(pathUrl(type, null), criteria, responseType, callback);
+        criteria.setCriteria(criteriaBuilder);
+        post(pathUrl(type, null), criteria, getType(QueryResultSet.class, responseType), callback);
     }
 
     /**
@@ -67,7 +67,7 @@ public class MobyraClient extends TupleRestClient {
      * @param responseType the response type
      * @param callback     the callback
      */
-    public <T> void query(QueryFilter queryFilter, Class<QueryResultSet<T>> responseType, MobyraResponseCallback<QueryResultSet<T>> callback) {
+    public <T> void query(QueryFilter queryFilter, Class<T> responseType, MobyraResponseCallback<QueryResultSet<T>> callback) {
         String type = getAnnotation(responseType.getEnclosingClass());
         post(pathUrl(type, null), queryFilter, responseType, callback);
     }
@@ -80,7 +80,7 @@ public class MobyraClient extends TupleRestClient {
      * @param responseType the response type
      * @param callback     the callback
      */
-    public <T> void query(PaginatedQueryFilter queryFilter, Class<QueryResultSet<T>> responseType, MobyraResponseCallback<QueryResultSet<T>> callback) {
+    public <T> void query(PaginatedQueryFilter queryFilter, Class<T> responseType, MobyraResponseCallback<QueryResultSet<T>> callback) {
         String type = getAnnotation(responseType.getEnclosingClass());
         post(pathUrl(type, null), queryFilter, responseType, callback);
     }
@@ -100,7 +100,7 @@ public class MobyraClient extends TupleRestClient {
                          MobyraResponseCallback<List<T>> callback) {
         Criteria criteria = new Criteria();
         if (null != criteriaBuilder) {
-            criteria.setCriteria(criteriaBuilder.getCriteriaMap());
+            criteria.setCriteria(criteriaBuilder);
         }
         post(listUrl(type), criteria, responseType, callback);
     }

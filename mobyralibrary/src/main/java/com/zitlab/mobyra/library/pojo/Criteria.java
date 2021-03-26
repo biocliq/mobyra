@@ -1,5 +1,7 @@
 package com.zitlab.mobyra.library.pojo;
 
+import com.zitlab.mobyra.library.builder.CriteriaBuilder;
+
 import java.util.Map;
 
 /**
@@ -20,9 +22,11 @@ public class Criteria {
     /**
      * Sets criteria.
      *
-     * @param criteria the criteria
+     * @param criteriaBuilder the criteria builder
      */
-    public void setCriteria(Map<String, String> criteria) {
-        this.criteria = criteria;
+    public void setCriteria(CriteriaBuilder criteriaBuilder) {
+        if (null != criteriaBuilder) {
+            this.criteria = criteriaBuilder.getCriteriaMap();
+        }
     }
 }
