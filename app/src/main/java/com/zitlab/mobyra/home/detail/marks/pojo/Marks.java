@@ -11,7 +11,7 @@ public class Marks {
 
     @SerializedName("id")
     @Expose
-    private int id;
+    private Number id;
     @SerializedName("exam")
     @Expose
     private String exam;
@@ -34,7 +34,7 @@ public class Marks {
     @Expose
     private float history;
 
-    public int getId() {
+    public Number getId() {
         return id;
     }
 

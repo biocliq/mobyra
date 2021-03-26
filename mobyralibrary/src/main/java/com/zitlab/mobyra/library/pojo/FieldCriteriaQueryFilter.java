@@ -1,13 +1,11 @@
 package com.zitlab.mobyra.library.pojo;
 
-import com.zitlab.mobyra.library.builder.CriteriaBuilder;
-
 import java.util.List;
 
 /**
  * The type Field criteria query filter.
  */
-public class FieldCriteriaQueryFilter  extends Criteria{
+public class FieldCriteriaQueryFilter extends Criteria {
     private List<String> fields;
 
     /**

@@ -42,7 +42,7 @@ public class MobyraClient extends TupleRestClient {
         }
     }
 
-    //---------- QUERY and Paginated Response ----------------------
+    //----------------- QUERY and Paginated Response ----------------------
 
     /**
      * Query.
@@ -85,7 +85,7 @@ public class MobyraClient extends TupleRestClient {
         post(pathUrl(type, null), queryFilter, responseType, callback);
     }
 
-    //---------- Query data and response type is List without Pagination info.
+    //---------- Query data and response type is List without Pagination info -------------
 
     /**
      * List.
@@ -133,19 +133,19 @@ public class MobyraClient extends TupleRestClient {
         post(listUrl(type), queryFilter, responseType, callback);
     }
 
-    //---------------- Get Record by Primary Key with column names and with all column names.
+    //----------- Get Record by Primary Key with column names and with all column names ------------
 
     /**
      * Find by id.
      *
-     * @param <T>       the type parameter
-     * @param id        the id
-     * @param valueType the value type
-     * @param callback  the callback
+     * @param <T>          the type parameter
+     * @param id           the id
+     * @param responseType the response type
+     * @param callback     the callback
      */
-    public <T> void findById(String id, Class<T> valueType, MobyraResponseCallback<T> callback) {
-        String type = getAnnotation(valueType);
-        get(pathUrl(type, id), valueType, callback);
+    public <T> void findById(String id, Class<T> responseType, MobyraResponseCallback<T> callback) {
+        String type = getAnnotation(responseType);
+        get(pathUrl(type, id), responseType, callback);
     }
 
     /**
@@ -220,7 +220,7 @@ public class MobyraClient extends TupleRestClient {
      */
     public <T> void save(List<Object> objectListToSave, Class<T> responseType, MobyraResponseCallback callback) {
         String type = getAnnotation(responseType);
-        post(dataUrl(type), objectListToSave, responseType, callback);
+        post(dataUrlMulti(type), objectListToSave, responseType, callback);
     }
 
     public <T> void delete(String id, Class<T> valueType, MobyraResponseCallback callback) {

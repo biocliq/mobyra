@@ -22,6 +22,7 @@ public class TupleRestClient extends BaseRestClient {
     private static final String KEY_UNIQUE = "unique";
     private static final String KEY_DATA = "data";
     private static final String KEY_LIST = "list";
+    private static final String KEY_LIST_MULTI = "multi";
     private final String username;
     private final String password;
     private final String appName;
@@ -130,6 +131,23 @@ public class TupleRestClient extends BaseRestClient {
         sb.append(FORWARD_SLASH).append(KEY_DATA);
         if (null != type) {
             sb.append(FORWARD_SLASH).append(type);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Data url multi string.
+     *
+     * @param type the type
+     * @return the string
+     */
+    protected String dataUrlMulti(final String type) {
+        StringBuilder sb = getContextPath();
+        sb.append(FORWARD_SLASH).append(KEY_DATA);
+        if (null != type) {
+            sb.append(FORWARD_SLASH).append(type)
+                    .append(FORWARD_SLASH)
+                    .append(KEY_LIST_MULTI);
         }
         return sb.toString();
     }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,7 +22,6 @@ import com.zitlab.mobyra.library.builder.CriteriaBuilder;
 import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
 import com.zitlab.mobyra.library.exception.MobyraException;
 import com.zitlab.mobyra.library.pojo.FieldCriteriaQueryFilter;
-import com.zitlab.mobyra.library.pojo.QueryResultSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +74,7 @@ public class StudentItemDetailsFragment extends Fragment {
         // Set the adapter
 
         Context context = view.getContext();
-        recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        recyclerView = view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         //recyclerView.setLayoutManager(new GridLayoutManager(context, mRowIndex));
 
@@ -103,7 +103,7 @@ public class StudentItemDetailsFragment extends Fragment {
             criteriaBuilder = new CriteriaBuilder.Builder()
                     .build();
             criteriaText.setText("Criteria: " + criteriaBuilder.toString());
-            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<QueryResultSet<Student>>) (status, response, exception) -> {
+            mobyraClient.query(criteriaBuilder, Student.class, (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -143,7 +143,7 @@ public class StudentItemDetailsFragment extends Fragment {
                     .keyValueGreaterThan("dob", "2010-03-01")
                     .build();
             criteriaText.setText("Criteria: " + criteriaBuilder.toString());
-            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<QueryResultSet<Student>>) (status, response, exception) -> {
+            mobyraClient.query(criteriaBuilder, Student.class, (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -160,7 +160,7 @@ public class StudentItemDetailsFragment extends Fragment {
                     .keyValueBetween("dob", "2010-02-01", "2013-02-01")
                     .build();
             criteriaText.setText("Criteria: " + criteriaBuilder.toString());
-            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<QueryResultSet<Student>>) (status, response, exception) -> {
+            mobyraClient.query(criteriaBuilder, Student.class, (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -177,7 +177,7 @@ public class StudentItemDetailsFragment extends Fragment {
                     .keyValue("studentName", "JOHN")
                     .build();
             criteriaText.setText("Criteria: " + criteriaBuilder.toString());
-            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<QueryResultSet<Student>>) (status, response, exception) -> {
+            mobyraClient.query(criteriaBuilder, Student.class, (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -194,7 +194,7 @@ public class StudentItemDetailsFragment extends Fragment {
                     .keyValueContains("studentName", "O")
                     .build();
             criteriaText.setText("Criteria: " + criteriaBuilder.toString());
-            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<QueryResultSet<Student>>) (status, response, exception) -> {
+            mobyraClient.query(criteriaBuilder, Student.class, (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -220,22 +220,14 @@ public class StudentItemDetailsFragment extends Fragment {
 
                 if (status) {
                     items = new ArrayList<>();
-                    items.add(result);
                     adapter = new StudentItemDetailsRecyclerViewAdapter(items);
                     recyclerView.setAdapter(adapter);
-                    //adapter.notifyDataSetChanged();
-
+                    Toast.makeText(getContext(), "Data successfully updated.", Toast.LENGTH_SHORT).show();
                 } else {
                     showErrorDialog(exception);
                 }
             });
         } else if (mRowIndex == 8) {
-            Student result = new Student();
-            result.setStudentName("JOHN");
-            result.setStudentCode("SD9000");
-            result.setStudentClass("5");
-            result.setDob("2010-01-02");
-
             Marks marks = new Marks();
             marks.setExam("EX03");
             marks.setEnglish(90);
@@ -243,19 +235,26 @@ public class StudentItemDetailsFragment extends Fragment {
             marks.setScience(90);
             marks.setTamil(86);
             marks.setHistory(75);
-
             List<Marks> marksList = new ArrayList<>();
             marksList.add(marks);
 
+            Student result = new Student();
+            result.setStudentName("JOHN");
+            result.setStudentCode("SD9000");
+            result.setStudentClass("5");
+            result.setDob("2010-01-02");
+            result.setMarks(marksList);
+
             criteriaText.setText("Request object: " + marksList.toString());
-            mobyraClient.save(result, Marks.class, (MobyraResponseCallback<Marks>) (status, response, exception) -> {
+            mobyraClient.save(result, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
-                    items.add(result);
+                    items = new ArrayList<>();
                     adapter = new StudentItemDetailsRecyclerViewAdapter(items);
                     recyclerView.setAdapter(adapter);
                     //adapter.notifyDataSetChanged();
+                    Toast.makeText(getContext(), "Data successfully updated.", Toast.LENGTH_SHORT).show();
                 } else {
                     showErrorDialog(exception);
                 }
@@ -273,11 +272,10 @@ public class StudentItemDetailsFragment extends Fragment {
 
                 if (status) {
                     items = new ArrayList<>();
-                    items.add(result);
                     adapter = new StudentItemDetailsRecyclerViewAdapter(items);
                     recyclerView.setAdapter(adapter);
                     //adapter.notifyDataSetChanged();
-
+                    Toast.makeText(getContext(), "Data successfully updated.", Toast.LENGTH_SHORT).show();
                 } else {
                     showErrorDialog(exception);
                 }
@@ -306,7 +304,7 @@ public class StudentItemDetailsFragment extends Fragment {
             });
         } else {
             criteriaBuilder = new CriteriaBuilder.Builder().build();
-            mobyraClient.query(criteriaBuilder, Student.class, (MobyraResponseCallback<QueryResultSet<Student>>) (status, response, exception) -> {
+            mobyraClient.query(criteriaBuilder, Student.class, (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {

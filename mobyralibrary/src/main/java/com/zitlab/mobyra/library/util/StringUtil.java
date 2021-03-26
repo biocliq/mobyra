@@ -71,7 +71,7 @@ public class StringUtil {
      * @param bytes the bytes
      * @return the string
      */
-    public static String toString(byte[] bytes){
+    public static String toString(byte[] bytes) {
         return new String(bytes);
     }
 }

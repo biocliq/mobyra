@@ -3,6 +3,7 @@ package com.zitlab.mobyra.library.auth;
 import com.zitlab.mobyra.library.util.StringUtil;
 
 import org.apache.commons.codec.digest.DigestUtils;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,10 +13,10 @@ import java.util.Map;
  */
 public class PalmyraAuthClient implements AuthClient {
 
-    private String HEADER_USER = "X-Palmyra-user";
-    private String HEADER_DEVICE = "X-Palmyra-device";
-    private String HEADER_RANDOM = "X-Palmyra-random";
-    private String HEADER_SECRET = "X-Palmyra-Authorization";
+    private final String HEADER_USER = "X-Palmyra-user";
+    private final String HEADER_DEVICE = "X-Palmyra-device";
+    private final String HEADER_RANDOM = "X-Palmyra-random";
+    private final String HEADER_SECRET = "X-Palmyra-Authorization";
 
     @Override
     public Map<String, String> getHeaders(String username, String password, String context, String deviceId) {
@@ -29,7 +30,7 @@ public class PalmyraAuthClient implements AuthClient {
         authMap.put(HEADER_SECRET, authHeader);
         authMap.put(HEADER_USER, username);
         authMap.put(HEADER_RANDOM, random);
-        if(null != deviceId) {
+        if (null != deviceId) {
             authMap.put(HEADER_DEVICE, deviceId);
         }
         return authMap;

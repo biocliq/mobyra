@@ -7,7 +7,6 @@ import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.zitlab.mobyra.library.exception.MobyraException;
 
-import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -26,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class MobyraAndroidTest {
 
-    private CountDownLatch lock = new CountDownLatch(1);
+    private final CountDownLatch lock = new CountDownLatch(1);
 
     @Test
     public void useAppContext() {
@@ -37,7 +36,7 @@ public class MobyraAndroidTest {
 
     @Test
     public void findById() throws InterruptedException {
-        MobyraClient mobyraClient = new MobyraClient("http://api.fluwiz.com", "admin", "ad", "palmyra" );
+        MobyraClient mobyraClient = new MobyraClient("http://api.fluwiz.com", "admin", "ad", "palmyra");
         final boolean[] isSuccess = {false};
         mobyraClient.findById("879", "mrci_series", new MobyraResponseCallback() {
             @Override
@@ -69,7 +68,7 @@ public class MobyraAndroidTest {
 
     @Test
     public void list() throws InterruptedException {
-        MobyraClient mobyraClient = new MobyraClient("http://api.fluwiz.com", "admin", "ad", "palmyra" );
+        MobyraClient mobyraClient = new MobyraClient("http://api.fluwiz.com", "admin", "ad", "palmyra");
         final boolean[] isSuccess = {false};
         mobyraClient.list("{}", String.class, new MobyraResponseCallback() {
             @Override

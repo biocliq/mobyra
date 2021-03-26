@@ -2,8 +2,6 @@ package com.zitlab.mobyra.library;
 
 import com.zitlab.mobyra.library.exception.MobyraException;
 
-import okhttp3.Response;
-
 /**
  * The interface Mobyra response callback.
  *
