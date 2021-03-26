@@ -6,32 +6,10 @@ import java.util.List;
 /**
  * The type Query builder.
  */
-public class QueryFilter {
+public class QueryFilter extends FieldCriteriaQueryFilter {
 
-    private List<String> fields;
     private List<String> orderBy;
     private List<String> groupBy;
-    private Criteria criteria;
-
-    /**
-     * Gets fields.
-     *
-     * @return the fields
-     */
-    public List<String> getFields() {
-        return fields;
-    }
-
-    /**
-     * Sets fields.
-     *
-     * @param fields the fields
-     */
-    public void setFields(List<String> fields) {
-        if (null != fields && fields.size() > 0) {
-            this.fields = fields;
-        }
-    }
 
     /**
      * Gets order by.
@@ -62,15 +40,15 @@ public class QueryFilter {
     /**
      * Sets order by descending.
      *
-     * @param orderBy the order by
+     * @param fields the order by
      */
-    public void setOrderByDescending(List<String> orderBy) {
+    public void setOrderByDescending(List<String> fields) {
         if (null != fields && fields.size() > 0) {
-            orderBy = new ArrayList<>();
+            this.orderBy = new ArrayList<>();
             for (String field : fields) {
                 if (null != field) {
                     String condition = String.format("-%s", field);
-                    orderBy.add(condition);
+                    this.orderBy.add(condition);
                 }
             }
         }
@@ -94,21 +72,4 @@ public class QueryFilter {
         this.groupBy = groupBy;
     }
 
-    /**
-     * Gets criteria.
-     *
-     * @return the criteria
-     */
-    public Criteria getCriteria() {
-        return criteria;
-    }
-
-    /**
-     * Sets criteria.
-     *
-     * @param criteria the criteria
-     */
-    public void setCriteria(Criteria criteria) {
-        this.criteria = criteria;
-    }
 }

@@ -8,6 +8,7 @@ import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
 import com.zitlab.mobyra.library.builder.PaginatedQueryFilter;
 import com.zitlab.mobyra.library.http.TupleRestClient;
 import com.zitlab.mobyra.library.pojo.Criteria;
+import com.zitlab.mobyra.library.pojo.FieldCriteriaQueryFilter;
 import com.zitlab.mobyra.library.pojo.QueryFilter;
 import com.zitlab.mobyra.library.pojo.QueryResultSet;
 
@@ -132,6 +133,8 @@ public class MobyraClient extends TupleRestClient {
         post(listUrl(type), queryFilter, responseType, callback);
     }
 
+    //---------------- Get Record by Primary Key with column names and with all column names.
+
     /**
      * Find by id.
      *
@@ -140,37 +143,58 @@ public class MobyraClient extends TupleRestClient {
      * @param valueType the value type
      * @param callback  the callback
      */
-    public <T> void findById(String id, Class<T> valueType, MobyraResponseCallback callback) {
+    public <T> void findById(String id, Class<T> valueType, MobyraResponseCallback<T> callback) {
         String type = getAnnotation(valueType);
         get(pathUrl(type, id), valueType, callback);
     }
 
     /**
+     * Find by id.
+     *
+     * @param <T>          the type parameter
+     * @param id           the id
+     * @param fields       the fields
+     * @param responseType the value type
+     * @param callback     the callback
+     */
+    public <T> void findById(String id, List<String> fields, Class<T> responseType, MobyraResponseCallback<T> callback) {
+        String type = getAnnotation(responseType);
+        if (null != fields && fields.size() > 0) {
+            post(pathUrl(type, id), fields, responseType, callback);
+        } else {
+            findById(id, responseType, callback);
+        }
+    }
+
+
+    //--------------- Find Unique value using <Key, Value> or using query filter------------------
+
+    /**
      * Find unique.
      *
-     * @param <T>       the type parameter
-     * @param keyValue  the key value
-     * @param valueType the value type
-     * @param callback  the callback
+     * @param <T>              the type parameter
+     * @param criteriaKeyValue the criteria key value
+     * @param responseType     the value type
+     * @param callback         the callback
      */
-    public <T> void findUnique(Pair<String, String> keyValue, Class<T> valueType, MobyraResponseCallback callback) {
-        CriteriaBuilder criteriaBuilder = new CriteriaBuilder.Builder().keyValue(keyValue.first, keyValue.second).build();
-        findUnique(criteriaBuilder, valueType, callback);
+    public <T> void findUnique(Pair<String, String> criteriaKeyValue, Class<T> responseType, MobyraResponseCallback<T> callback) {
+        CriteriaBuilder criteriaBuilder = new CriteriaBuilder.Builder().keyValue(criteriaKeyValue.first, criteriaKeyValue.second).build();
+        FieldCriteriaQueryFilter queryFilter = new FieldCriteriaQueryFilter();
+        queryFilter.setCriteria(criteriaBuilder);
+        findUnique(queryFilter, responseType, callback);
     }
 
     /**
      * Find unique.
      *
-     * @param <T>             the type parameter
-     * @param criteriaBuilder the criteria builder
-     * @param responseType    the response type
-     * @param callback        the callback
+     * @param <T>          the type parameter
+     * @param queryFilter  the criteria builder
+     * @param responseType the response type
+     * @param callback     the callback
      */
-    public <T> void findUnique(CriteriaBuilder criteriaBuilder, Class<T> responseType, MobyraResponseCallback callback) {
+    public <T> void findUnique(FieldCriteriaQueryFilter queryFilter, Class<T> responseType, MobyraResponseCallback callback) {
         String type = getAnnotation(responseType);
-        Criteria criteria = new Criteria();
-        criteria.setCriteria(criteriaBuilder.getCriteriaMap());
-        post(uniqueUrl(type), criteria, responseType, callback);
+        post(uniqueUrl(type), queryFilter, responseType, callback);
     }
 
     /**
