@@ -3,6 +3,21 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    // define a okhttp BOM and its version.
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+    testImplementation("com.squareup.okhttp3:mockwebserver")
+
+    //Apache codec for Digest.
+    implementation("commons-codec:commons-codec:1.15")
+    //GSON: Convert Java Objects into their JSON representation.
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    testImplementation 'junit:junit:4.+'
 }

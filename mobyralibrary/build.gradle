@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-
+    implementation project(':palmyralib')
     // define a okhttp BOM and its version.
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
     implementation("com.squareup.okhttp3:okhttp")
