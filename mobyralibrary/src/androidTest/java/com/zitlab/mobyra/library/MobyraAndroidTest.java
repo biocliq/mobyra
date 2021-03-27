@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.zitlab.mobyra.library.exception.MobyraException;
+import com.zitlab.mobyra.library.exception.PalmyraException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,9 +38,9 @@ public class MobyraAndroidTest {
     public void findById() throws InterruptedException {
         MobyraClient mobyraClient = new MobyraClient("http://api.fluwiz.com", "admin", "ad", "palmyra");
         final boolean[] isSuccess = {false};
-        mobyraClient.findById("879", "mrci_series", new MobyraResponseCallback() {
+        mobyraClient.findById("879", "mrci_series", new ResponseCallback() {
             @Override
-            public <T> void onMobyraResponse(final boolean status, final T response, final MobyraException exception) {
+            public <T> void onMobyraResponse(final boolean status, final T response, final PalmyraException exception) {
                 lock.countDown();
                 isSuccess[0] = status;
             }
@@ -70,9 +70,9 @@ public class MobyraAndroidTest {
     public void list() throws InterruptedException {
         MobyraClient mobyraClient = new MobyraClient("http://api.fluwiz.com", "admin", "ad", "palmyra");
         final boolean[] isSuccess = {false};
-        mobyraClient.list("{}", String.class, new MobyraResponseCallback() {
+        mobyraClient.list("{}", String.class, new ResponseCallback() {
             @Override
-            public <T> void onMobyraResponse(final boolean status, final T response, final MobyraException exception) {
+            public <T> void onMobyraResponse(final boolean status, final T response, final PalmyraException exception) {
                 lock.countDown();
                 isSuccess[0] = status;
             }

@@ -17,10 +17,10 @@ import com.zitlab.mobyra.R;
 import com.zitlab.mobyra.home.detail.marks.pojo.Marks;
 import com.zitlab.mobyra.home.detail.student.pojo.Student;
 import com.zitlab.mobyra.library.MobyraClient;
-import com.zitlab.mobyra.library.MobyraResponseCallback;
+import com.zitlab.mobyra.library.ResponseCallback;
 import com.zitlab.mobyra.library.builder.CriteriaBuilder;
 import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
-import com.zitlab.mobyra.library.exception.MobyraException;
+import com.zitlab.mobyra.library.exception.PalmyraException;
 import com.zitlab.mobyra.library.pojo.FieldCriteriaQueryFilter;
 
 import java.util.ArrayList;
@@ -125,7 +125,7 @@ public class StudentItemDetailsFragment extends Fragment {
             FieldCriteriaQueryFilter queryFilter = new FieldCriteriaQueryFilter();
             queryFilter.setCriteria(criteriaBuilder);
             criteriaText.setText("Criteria: " + criteriaBuilder.toString());
-            mobyraClient.findUnique(queryFilter, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
+            mobyraClient.findUnique(queryFilter, Student.class, (ResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -215,7 +215,7 @@ public class StudentItemDetailsFragment extends Fragment {
             result.setDob("2010-01-02");
             criteriaText.setText("Request object: " + result.toString());
 
-            mobyraClient.save(result, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
+            mobyraClient.save(result, Student.class, (ResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -246,7 +246,7 @@ public class StudentItemDetailsFragment extends Fragment {
             result.setMarks(marksList);
 
             criteriaText.setText("Request object: " + marksList.toString());
-            mobyraClient.save(result, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
+            mobyraClient.save(result, Student.class, (ResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -267,7 +267,7 @@ public class StudentItemDetailsFragment extends Fragment {
             result.setDob("2010-01-02");
             criteriaText.setText("Request object: " + result.toString());
 
-            mobyraClient.save(result, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
+            mobyraClient.save(result, Student.class, (ResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -288,7 +288,7 @@ public class StudentItemDetailsFragment extends Fragment {
             result.setDob("2010-01-02");
             criteriaText.setText("Request object: " + result.toString());
 
-            mobyraClient.save(result, Student.class, (MobyraResponseCallback<Student>) (status, response, exception) -> {
+            mobyraClient.save(result, Student.class, (ResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
                 if (status) {
@@ -322,7 +322,7 @@ public class StudentItemDetailsFragment extends Fragment {
     }
 
 
-    private void showErrorDialog(MobyraException exception) {
+    private void showErrorDialog(PalmyraException exception) {
         MaterialDialog mDialog = new MaterialDialog.Builder(getActivity())
                 .setTitle(getString(R.string.app_name))
                 .setMessage((exception != null && exception.getMessage() != null) ? exception.getMessage() : "Something unexpected happened. Please try again after sometime.")

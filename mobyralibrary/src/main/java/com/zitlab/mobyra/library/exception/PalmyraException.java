@@ -5,7 +5,7 @@ import android.content.Context;
 /**
  * The type Mobyra exception.
  */
-public class MobyraException extends Exception {
+public class PalmyraException extends Exception {
     private int code;
     private int msgResId;
 
@@ -15,7 +15,7 @@ public class MobyraException extends Exception {
      * @param error the error
      * @param ex    the ex
      */
-    public MobyraException(MobyraError error, Throwable ex) {
+    public PalmyraException(PalmyraError error, Throwable ex) {
         super(ex);
         this.code = error.getCode();
         this.msgResId = error.getMessageResourceId();
@@ -26,7 +26,7 @@ public class MobyraException extends Exception {
      *
      * @param message the message
      */
-    public MobyraException(String message) {
+    public PalmyraException(String message) {
         super(message);
         this.code = -1;
     }
@@ -37,7 +37,7 @@ public class MobyraException extends Exception {
      * @param code    the code
      * @param message the message
      */
-    public MobyraException(int code, String message) {
+    public PalmyraException(int code, String message) {
         super(message);
         this.code = code;
     }
@@ -47,7 +47,7 @@ public class MobyraException extends Exception {
      *
      * @param ex the ex
      */
-    public MobyraException(Throwable ex) {
+    public PalmyraException(Throwable ex) {
         super(ex);
     }
 

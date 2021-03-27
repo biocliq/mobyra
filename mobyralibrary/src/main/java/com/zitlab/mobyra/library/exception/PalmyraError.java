@@ -5,7 +5,7 @@ import com.zitlab.mobyra.library.R;
 /**
  * The enum Mobyra error.
  */
-public enum MobyraError {
+public enum PalmyraError {
 
     /**
      * Malformed url mobyra error.
@@ -27,7 +27,7 @@ public enum MobyraError {
     private final int code;
     private final int messageResourceId;
 
-    MobyraError(int code, int messageResourceId) {
+    PalmyraError(int code, int messageResourceId) {
         this.code = code;
         this.messageResourceId = messageResourceId;
     }

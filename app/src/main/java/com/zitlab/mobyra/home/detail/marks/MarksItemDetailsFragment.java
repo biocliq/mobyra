@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zitlab.mobyra.R;
 import com.zitlab.mobyra.home.detail.marks.pojo.Marks;
 import com.zitlab.mobyra.library.MobyraClient;
-import com.zitlab.mobyra.library.MobyraResponseCallback;
+import com.zitlab.mobyra.library.ResponseCallback;
 import com.zitlab.mobyra.library.builder.CriteriaBuilder;
 import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
 import com.zitlab.mobyra.library.pojo.QueryResultSet;
@@ -114,7 +114,7 @@ public class MarksItemDetailsFragment extends Fragment {
         MobyraClient mobyraClient = new MobyraClient(builder);
         //----------------------------------------
 
-        mobyraClient.query(criteriaBuilder, Marks.class, (MobyraResponseCallback<QueryResultSet<Marks>>) (status, response, exception) -> {
+        mobyraClient.query(criteriaBuilder, Marks.class, (ResponseCallback<QueryResultSet<Marks>>) (status, response, exception) -> {
             pd.dismiss();
 
             if (status) {

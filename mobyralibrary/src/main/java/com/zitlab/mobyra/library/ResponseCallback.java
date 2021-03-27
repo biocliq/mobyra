@@ -1,13 +1,13 @@
 package com.zitlab.mobyra.library;
 
-import com.zitlab.mobyra.library.exception.MobyraException;
+import com.zitlab.mobyra.library.exception.PalmyraException;
 
 /**
  * The interface Mobyra response callback.
  *
  * @param <T> the type parameter
  */
-public interface MobyraResponseCallback<T> {
+public interface ResponseCallback<T> {
 
     /**
      * On mobyra response.
@@ -16,5 +16,5 @@ public interface MobyraResponseCallback<T> {
      * @param response  the response
      * @param exception the exception
      */
-    void onMobyraResponse(boolean status, T response, MobyraException exception);
+    void onMobyraResponse(boolean status, T response, PalmyraException exception);
 }

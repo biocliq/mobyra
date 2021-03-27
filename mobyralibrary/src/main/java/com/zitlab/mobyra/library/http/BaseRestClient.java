@@ -1,13 +1,10 @@
 package com.zitlab.mobyra.library.http;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import com.google.gson.Gson;
-import com.zitlab.mobyra.library.MobyraResponseCallback;
+import com.zitlab.mobyra.library.ResponseCallback;
 import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
-import com.zitlab.mobyra.library.exception.MobyraError;
-import com.zitlab.mobyra.library.exception.MobyraException;
+import com.zitlab.mobyra.library.exception.PalmyraError;
+import com.zitlab.mobyra.library.exception.PalmyraException;
 
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
@@ -31,14 +28,13 @@ import okhttp3.logging.HttpLoggingInterceptor;
  */
 public abstract class BaseRestClient {
 
-    private final Gson gson = new Gson();
-    private final MobyraClientBuilder builder;
-
     /**
      * The constant JSON.
      */
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
+    private final Gson gson = new Gson();
+    private final MobyraClientBuilder builder;
 
 
     /**
@@ -82,7 +78,7 @@ public abstract class BaseRestClient {
      * @return the response
      * @throws IOException the io exception
      */
-    protected <T> void get(final String path, final Class<T> responseType, final MobyraResponseCallback callback) {
+    protected <T> void get(final String path, final Class<T> responseType, final ResponseCallback callback) {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme(builder.getScheme())
                 .host(builder.getHostName())
@@ -103,7 +99,7 @@ public abstract class BaseRestClient {
      * @return the response
      * @throws IOException the io exception
      */
-    protected void post(final String path, final Object obj, final Type responseType, final MobyraResponseCallback callback) {
+    protected void post(final String path, final Object obj, final Type responseType, final ResponseCallback callback) {
         String requestBody = gson.toJson(obj);
         this.post(path, requestBody, responseType, callback);
     }
@@ -118,7 +114,7 @@ public abstract class BaseRestClient {
      * @return the response
      * @throws IOException the io exception
      */
-    protected void post(final String path, final String jsonData, final Type responseType, MobyraResponseCallback callback) {
+    protected void post(final String path, final String jsonData, final Type responseType, ResponseCallback callback) {
 
         HttpUrl url = new HttpUrl.Builder()
                 .scheme(builder.getScheme())
@@ -144,7 +140,7 @@ public abstract class BaseRestClient {
      * @param responseType the response type
      * @param callback     the callback
      */
-    protected <T> void put(final String path, final Object obj, final Class<T> responseType, final MobyraResponseCallback callback) {
+    protected <T> void put(final String path, final Object obj, final Class<T> responseType, final ResponseCallback callback) {
         String requestBody = gson.toJson(obj);
         this.put(path, requestBody, responseType, callback);
     }
@@ -159,7 +155,7 @@ public abstract class BaseRestClient {
      * @param responseType the response type
      * @param callback     the callback
      */
-    protected <T> void put(final String path, final String jsonData, final Class<T> responseType, MobyraResponseCallback callback) {
+    protected <T> void put(final String path, final String jsonData, final Class<T> responseType, ResponseCallback callback) {
 
         HttpUrl url = new HttpUrl.Builder()
                 .scheme(builder.getScheme())
@@ -186,7 +182,7 @@ public abstract class BaseRestClient {
      * @return the response
      * @throws IOException the io exception
      */
-    protected <T> void delete(final String path, final Class<T> responseType, final MobyraResponseCallback callback) {
+    protected <T> void delete(final String path, final Class<T> responseType, final ResponseCallback callback) {
 
         HttpUrl url = new HttpUrl.Builder()
                 .scheme(builder.getScheme())
@@ -212,11 +208,11 @@ public abstract class BaseRestClient {
         return builder;
     }
 
-    private <T> void executeRequest(Request request, Type valueType, MobyraResponseCallback callback) {
+    private <T> void executeRequest(Request request, Type valueType, ResponseCallback callback) {
         getNewHttpClient().newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                callback.onMobyraResponse(false, Object.class, new MobyraException(e));
+                callback.onMobyraResponse(false, Object.class, new PalmyraException(e));
             }
 
             @Override
@@ -225,15 +221,15 @@ public abstract class BaseRestClient {
                 if (isSuccess) {
                     try {
                         T obj = deserialize(response, valueType);
-                        sendCallbackOnUIThread(callback, true, obj, null);
+                        sendCallback(callback, true, obj, null);
                         //callback.onMobyraResponse(true, obj, null);
-                    } catch (MobyraException e) {
+                    } catch (PalmyraException e) {
                         e.printStackTrace();
-                        sendCallbackOnUIThread(callback, false, null, e);
+                        sendCallback(callback, false, null, e);
                         //callback.onMobyraResponse(false, null, e);
                     }
                 } else {
-                    sendCallbackOnUIThread(callback, false, null, new MobyraException(response.code(), response.message()));
+                    sendCallback(callback, false, null, new PalmyraException(response.code(), response.message()));
                     //callback.onMobyraResponse(false, null, new MobyraException(response.code(), response.message()));
                 }
             }
@@ -249,14 +245,15 @@ public abstract class BaseRestClient {
      * @param ex
      * @param <T>
      */
-    private <T> void sendCallbackOnUIThread(MobyraResponseCallback callback, boolean status, T response, MobyraException ex) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                callback.onMobyraResponse(status, response, ex);
-            }
-        });
-    }
+//    public  <T> void sendCallback(MobyraResponseCallback callback, boolean status, T response, MobyraException ex) {
+//        new Handler(Looper.getMainLooper()).post(new Runnable() {
+//            @Override
+//            public void run() {
+//                callback.onMobyraResponse(status, response, ex);
+//            }
+//        });
+//    }
+    protected abstract <T> void sendCallback(ResponseCallback callback, boolean status, T response, PalmyraException ex);
 
     /**
      * Deserialize t.
@@ -265,13 +262,13 @@ public abstract class BaseRestClient {
      * @param response  the response
      * @param valueType the value type
      * @return the t
-     * @throws MobyraException the mobyra exception
+     * @throws PalmyraException the mobyra exception
      */
-    protected final <T> T deserialize(Response response, Type valueType) throws MobyraException {
+    protected final <T> T deserialize(Response response, Type valueType) throws PalmyraException {
         try {
             return this.deserialize(response.body().string(), valueType);
         } catch (IOException e) {
-            throw new MobyraException(MobyraError.IO, e);
+            throw new PalmyraException(PalmyraError.IO, e);
         }
     }
 
