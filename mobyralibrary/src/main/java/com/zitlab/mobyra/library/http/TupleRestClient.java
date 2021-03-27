@@ -7,10 +7,8 @@ import com.zitlab.mobyra.library.MobyraResponseCallback;
 import com.zitlab.mobyra.library.auth.AuthClient;
 import com.zitlab.mobyra.library.auth.BasicAuthClient;
 import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
-
 import java.util.Map;
 import java.util.Map.Entry;
-
 import static com.zitlab.mobyra.library.util.StringUtil.FORWARD_SLASH;
 
 /**

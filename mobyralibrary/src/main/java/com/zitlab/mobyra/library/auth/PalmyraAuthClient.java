@@ -1,9 +1,7 @@
 package com.zitlab.mobyra.library.auth;
 
 import com.zitlab.mobyra.library.util.StringUtil;
-
 import org.apache.commons.codec.digest.DigestUtils;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

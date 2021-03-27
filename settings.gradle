@@ -1,3 +1,4 @@
+include ':palmyralib'
 include ':mobyralibrary'
 include ':app'
 rootProject.name = "mobyra"

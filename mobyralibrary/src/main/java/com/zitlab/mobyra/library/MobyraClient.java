@@ -1,7 +1,5 @@
 package com.zitlab.mobyra.library;
 
-import android.util.Pair;
-
 import com.zitlab.mobyra.library.annotation.MobyraType;
 import com.zitlab.mobyra.library.builder.CriteriaBuilder;
 import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
@@ -168,21 +166,6 @@ public class MobyraClient extends TupleRestClient {
 
 
     //--------------- Find Unique value using <Key, Value> or using query filter------------------
-
-    /**
-     * Find unique.
-     *
-     * @param <T>              the type parameter
-     * @param criteriaKeyValue the criteria key value
-     * @param responseType     the value type
-     * @param callback         the callback
-     */
-    public <T> void findUnique(Pair<String, String> criteriaKeyValue, Class<T> responseType, MobyraResponseCallback<T> callback) {
-        CriteriaBuilder criteriaBuilder = new CriteriaBuilder.Builder().keyValue(criteriaKeyValue.first, criteriaKeyValue.second).build();
-        FieldCriteriaQueryFilter queryFilter = new FieldCriteriaQueryFilter();
-        queryFilter.setCriteria(criteriaBuilder);
-        findUnique(queryFilter, responseType, callback);
-    }
 
     /**
      * Find unique.

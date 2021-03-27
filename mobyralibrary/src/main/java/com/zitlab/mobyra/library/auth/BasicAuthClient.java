@@ -1,9 +1,7 @@
 package com.zitlab.mobyra.library.auth;
 
-import android.util.Base64;
-
 import com.zitlab.mobyra.library.util.StringUtil;
-
+import org.apache.commons.codec.binary.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +14,8 @@ public class BasicAuthClient implements AuthClient {
     @Override
     public Map<String, String> getHeaders(String username, String password, String context, String deviceId) {
         String auth = username + StringUtil.COLON + password;
-        byte[] encodedAuth = Base64.encode(auth.getBytes(), Base64.NO_WRAP);
+        //byte[] encodedAuth = Base64.encode(auth.getBytes(), Base64.NO_WRAP);
+        byte[] encodedAuth = Base64.encodeBase64(auth.getBytes());
         String authHeader = TAG_BASIC_AUTH.concat(StringUtil.SPACE).concat(StringUtil.toString(encodedAuth));
         Map<String, String> result = new HashMap<>();
         result.put(HEADER_BASIC_AUTH, authHeader);

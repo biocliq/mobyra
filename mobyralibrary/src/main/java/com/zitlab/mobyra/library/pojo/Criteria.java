@@ -1,7 +1,6 @@
 package com.zitlab.mobyra.library.pojo;
 
 import com.zitlab.mobyra.library.builder.CriteriaBuilder;
-
 import java.util.Map;
 
 /**
