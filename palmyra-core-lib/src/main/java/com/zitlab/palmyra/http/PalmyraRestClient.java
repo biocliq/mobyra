@@ -12,7 +12,9 @@ import com.zitlab.palmyra.pojo.Criteria;
 import com.zitlab.palmyra.pojo.FieldCriteriaQueryFilter;
 import com.zitlab.palmyra.pojo.QueryFilter;
 import com.zitlab.palmyra.pojo.QueryResultSet;
+
 import java.util.List;
+
 import static com.zitlab.palmyra.util.StringUtil.FORWARD_SLASH;
 
 /**
@@ -59,6 +61,11 @@ public abstract class PalmyraRestClient extends BaseRestClient {
         } else {
             return t.getSimpleName();
         }
+    }
+
+    @Override
+    protected AuthClient getAuthClient() {
+        return authClient;
     }
 
     //----------------- QUERY and Paginated Response ----------------------

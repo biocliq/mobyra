@@ -152,7 +152,7 @@ public class CriteriaBuilder {
          *
          * @param key   the key
          * @param value the value
-         * @return builder
+         * @return builder builder
          */
         public Builder keyValueContains(final String key, final String value) {
             String condition = String.format("_%s*", value);
@@ -232,7 +232,7 @@ public class CriteriaBuilder {
          * @param key    the key
          * @param value1 the value 1
          * @param value2 the value 2
-         * @return builder
+         * @return builder builder
          */
         public Builder keyValueBetween(final String key, final Number value1, final Number value2) {
             String condition = String.format("%s...%s", value1, value2);
@@ -246,7 +246,7 @@ public class CriteriaBuilder {
          * @param key   the key
          * @param date1 the date 1
          * @param date2 the date 2
-         * @return builder
+         * @return builder builder
          */
         public Builder keyValueBetween(final String key, final Date date1, final Date date2) {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -262,7 +262,7 @@ public class CriteriaBuilder {
          * @param key   the key
          * @param date1 the date 1
          * @param date2 the date 2
-         * @return builder
+         * @return builder builder
          */
         public Builder keyValueBetweenTime(final String key, final Date date1, final Date date2) {
             DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
@@ -277,7 +277,7 @@ public class CriteriaBuilder {
          * @param key   the key
          * @param date1 the date 1
          * @param date2 the date 2
-         * @return builder
+         * @return builder builder
          */
         public Builder keyValueBetweenDateTime(final String key, final Date date1, final Date date2) {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
