@@ -5,6 +5,7 @@ import com.zitlab.palmyra.ResponseCallback;
 import com.zitlab.palmyra.auth.AuthClient;
 import com.zitlab.palmyra.exception.PalmyraError;
 import com.zitlab.palmyra.exception.PalmyraException;
+import com.zitlab.palmyra.headers.PalmyraHeader;
 import com.zitlab.palmyra.util.BaseDevice;
 
 import java.io.IOException;
@@ -86,6 +87,29 @@ public abstract class BaseRestClient {
      */
     public void setRequestHeaders(Map<String, String> requestHeaders) {
         this.requestHeaders = requestHeaders;
+    }
+
+    /**
+     * Add request header.
+     *
+     * @param key   the key
+     * @param value the value
+     */
+    public void addRequestHeader(String key, String value) {
+        if (null != key) {
+            this.requestHeaders.put(key, value);
+        }
+    }
+
+    /**
+     * Add request header.
+     *
+     * @param header the header
+     */
+    public void addRequestHeader(PalmyraHeader header) {
+        if (null != header && null != header.key()) {
+            this.requestHeaders.put(header.key(), header.value());
+        }
     }
 
     /**

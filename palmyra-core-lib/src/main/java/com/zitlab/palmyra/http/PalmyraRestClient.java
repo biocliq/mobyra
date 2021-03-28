@@ -26,14 +26,12 @@ public abstract class PalmyraRestClient extends BaseRestClient {
     private static final String KEY_UNIQUE = "unique";
     private static final String KEY_DATA = "data";
     private static final String KEY_LIST = "list";
+    private static final String KEY_FIRST = "first";
     private static final String KEY_LIST_MULTI = "multi";
-    private final String username;
-    private final String password;
     private final String appName;
     private final String context;
     private final String apiVersion;
     private final AuthClient authClient;
-    private String deviceId;
 
     /**
      * Instantiates a new Tuple rest client.
@@ -42,8 +40,6 @@ public abstract class PalmyraRestClient extends BaseRestClient {
      */
     public PalmyraRestClient(MobyraClientBuilder builder) {
         super(builder);
-        username = builder.getUserName();
-        password = builder.getPassword();
         appName = builder.getAppName();
         context = builder.getContext();
         authClient = builder.getAuthClient();
@@ -209,6 +205,19 @@ public abstract class PalmyraRestClient extends BaseRestClient {
     }
 
     /**
+     * Query first.
+     *
+     * @param <T>          the type parameter
+     * @param fields       the fields
+     * @param responseType the response type
+     * @param callback     the callback
+     */
+    public <T> void queryFirst(List<String> fields, Class<T> responseType, ResponseCallback callback) {
+        String type = getAnnotation(responseType);
+        post(firstUrl(type), fields, responseType, callback);
+    }
+
+    /**
      * Save.
      *
      * @param <T>          the type parameter
@@ -240,20 +249,6 @@ public abstract class PalmyraRestClient extends BaseRestClient {
     }
 
     /**
-     * Find by id.
-     *
-     * @param <T>          the type parameter
-     * @param id           the id
-     * @param type         the type
-     * @param responseType the response type
-     * @param callback     the callback
-     */
-    public <T> void findById(String id, String type, Class<T> responseType, ResponseCallback callback) {
-        String url = pathUrl(type, id);
-        get(url, responseType, callback);
-    }
-
-    /**
      * Path url string.
      *
      * @param type the type
@@ -269,6 +264,23 @@ public abstract class PalmyraRestClient extends BaseRestClient {
         if (null != id) {
             sb.append(FORWARD_SLASH).append(id);
         }
+        return sb.toString();
+    }
+
+    /**
+     * First url string.
+     *
+     * @param type the type
+     * @return the string
+     */
+    protected String firstUrl(final String type) {
+        StringBuilder sb = getContextPath();
+        sb.append(FORWARD_SLASH).append(KEY_QUERY);
+        if (null != type) {
+            sb.append(FORWARD_SLASH).append(type);
+        }
+        sb.append(FORWARD_SLASH).append(KEY_FIRST);
+
         return sb.toString();
     }
 
