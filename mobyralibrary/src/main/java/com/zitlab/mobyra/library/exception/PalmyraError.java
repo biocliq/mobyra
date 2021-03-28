@@ -1,35 +1,19 @@
 package com.zitlab.mobyra.library.exception;
 
-import com.zitlab.mobyra.library.R;
-
 /**
  * The enum Mobyra error.
  */
 public enum PalmyraError {
 
     /**
-     * Malformed url mobyra error.
-     */
-    MalformedURL(1000, R.string.err1000),
-    /**
-     * Unsupported encoding mobyra error.
-     */
-    UnsupportedEncoding(1001, R.string.err1001),
-    /**
-     * Protocol mobyra error.
-     */
-    Protocol(1002, R.string.err1002),
-    /**
      * Io mobyra error.
      */
-    IO(1003, R.string.err1003);
+    IO(1003);
 
     private final int code;
-    private final int messageResourceId;
 
-    PalmyraError(int code, int messageResourceId) {
+    PalmyraError(int code) {
         this.code = code;
-        this.messageResourceId = messageResourceId;
     }
 
     /**
@@ -41,17 +25,4 @@ public enum PalmyraError {
         return this.code;
     }
 
-    /**
-     * Gets message resource id.
-     *
-     * @return the message resource id
-     */
-    public int getMessageResourceId() {
-        return messageResourceId;
-    }
-
-    @Override
-    public String toString() {
-        return code + ": " + messageResourceId;
-    }
 }
