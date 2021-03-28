@@ -1,4 +1,4 @@
-package com.zitlab.mobyra.library.util;
+package com.zitlab.palmyra.util;
 
 /**
  * The type Device util.

@@ -1,6 +1,6 @@
-package com.zitlab.mobyra.library.auth;
+package com.zitlab.palmyra.auth;
 
-import com.zitlab.mobyra.library.util.StringUtil;
+import com.zitlab.palmyra.util.StringUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import java.util.Date;
 import java.util.HashMap;

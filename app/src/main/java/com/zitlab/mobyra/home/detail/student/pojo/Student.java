@@ -5,7 +5,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.zitlab.mobyra.home.detail.marks.pojo.Marks;
-import com.zitlab.mobyra.library.annotation.MobyraType;
+import com.zitlab.palmyra.annotation.MobyraType;
 
 @MobyraType("student")
 public class Student {

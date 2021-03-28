@@ -1,4 +1,4 @@
-package com.zitlab.mobyra.library.builder;
+package com.zitlab.palmyra.builder;
 
 /**
  * The type Base client builder.

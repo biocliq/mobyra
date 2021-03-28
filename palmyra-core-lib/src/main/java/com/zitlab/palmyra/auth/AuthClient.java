@@ -1,4 +1,4 @@
-package com.zitlab.mobyra.library.auth;
+package com.zitlab.palmyra.auth;
 
 import java.util.Map;
 

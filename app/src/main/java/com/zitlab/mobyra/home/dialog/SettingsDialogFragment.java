@@ -7,14 +7,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.pixplicity.easyprefs.library.Prefs;
 import com.zitlab.mobyra.Constants;
 import com.zitlab.mobyra.R;
-import com.zitlab.mobyra.library.util.StringUtil;
 
 public class SettingsDialogFragment extends DialogFragment implements View.OnClickListener {
 
@@ -57,9 +55,9 @@ public class SettingsDialogFragment extends DialogFragment implements View.OnCli
         appName = view.findViewById(R.id.editTextAppName);
         contextName = view.findViewById(R.id.editTextContextName);
 
-        hostName.setText(Prefs.getString(Constants.KEY_HOST_NAME, StringUtil.EMPTY));
-        appName.setText(Prefs.getString(Constants.KEY_APP_NAME, StringUtil.EMPTY));
-        contextName.setText(Prefs.getString(Constants.KEY_CONTEXT_NAME, StringUtil.EMPTY));
+        hostName.setText(Prefs.getString(Constants.KEY_HOST_NAME, ""));
+        appName.setText(Prefs.getString(Constants.KEY_APP_NAME, ""));
+        contextName.setText(Prefs.getString(Constants.KEY_CONTEXT_NAME, ""));
 
         saveBtn = view.findViewById(R.id.saveButton);
         saveBtn.setOnClickListener(this);

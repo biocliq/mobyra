@@ -1,10 +1,9 @@
 
 package com.zitlab.mobyra.home.detail.marks.pojo;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.zitlab.mobyra.library.annotation.MobyraType;
+import com.zitlab.palmyra.annotation.MobyraType;
 
 @MobyraType("marks")
 public class Marks {

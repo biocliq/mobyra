@@ -15,10 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zitlab.mobyra.R;
 import com.zitlab.mobyra.home.detail.marks.pojo.Marks;
 import com.zitlab.mobyra.library.MobyraClient;
-import com.zitlab.mobyra.library.ResponseCallback;
-import com.zitlab.mobyra.library.builder.CriteriaBuilder;
-import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
-import com.zitlab.mobyra.library.pojo.QueryResultSet;
+import com.zitlab.palmyra.ResponseCallback;
+import com.zitlab.palmyra.builder.CriteriaBuilder;
+import com.zitlab.palmyra.builder.MobyraClientBuilder;
+import com.zitlab.palmyra.pojo.QueryResultSet;
 
 import java.util.ArrayList;
 import java.util.List;

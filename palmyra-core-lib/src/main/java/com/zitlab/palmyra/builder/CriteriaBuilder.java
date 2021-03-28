@@ -1,4 +1,4 @@
-package com.zitlab.mobyra.library.builder;
+package com.zitlab.palmyra.builder;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

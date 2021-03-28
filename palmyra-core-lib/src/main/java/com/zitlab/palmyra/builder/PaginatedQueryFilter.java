@@ -1,6 +1,6 @@
-package com.zitlab.mobyra.library.builder;
+package com.zitlab.palmyra.builder;
 
-import com.zitlab.mobyra.library.pojo.QueryFilter;
+import com.zitlab.palmyra.pojo.QueryFilter;
 
 /**
  * The type Pagination query builder.

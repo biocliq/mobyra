@@ -8,7 +8,6 @@ java {
 }
 
 dependencies {
-    implementation project(':palmyra-core-lib')
 
     //Apache codec for Digest.
     implementation("commons-codec:commons-codec:1.15")

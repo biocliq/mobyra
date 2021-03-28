@@ -5,7 +5,8 @@ import android.content.Context;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.zitlab.mobyra.library.exception.PalmyraException;
+import com.zitlab.palmyra.lib.ResponseCallback;
+import com.zitlab.palmyra.exception.PalmyraException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

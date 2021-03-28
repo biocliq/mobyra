@@ -1,4 +1,4 @@
-package com.zitlab.mobyra.library.exception;
+package com.zitlab.palmyra.exception;
 
 /**
  * The type Mobyra exception.

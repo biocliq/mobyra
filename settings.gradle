@@ -1,3 +1,4 @@
+include ':palmyra-core-lib'
 include ':palmyralib'
 include ':mobyralibrary'
 include ':app'

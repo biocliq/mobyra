@@ -1,6 +1,6 @@
-package com.zitlab.mobyra.library;
+package com.zitlab.palmyra;
 
-import com.zitlab.mobyra.library.exception.PalmyraException;
+import com.zitlab.palmyra.exception.PalmyraException;
 
 /**
  * The interface Mobyra response callback.

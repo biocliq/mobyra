@@ -1,25 +1,25 @@
 /**
  * <LICENSE/>
  */
-package com.zitlab.mobyra.library.http;
+package com.zitlab.palmyra.http;
 
-import com.zitlab.mobyra.library.ResponseCallback;
-import com.zitlab.mobyra.library.annotation.MobyraType;
-import com.zitlab.mobyra.library.auth.AuthClient;
-import com.zitlab.mobyra.library.auth.BasicAuthClient;
-import com.zitlab.mobyra.library.builder.CriteriaBuilder;
-import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
-import com.zitlab.mobyra.library.builder.PaginatedQueryFilter;
-import com.zitlab.mobyra.library.pojo.Criteria;
-import com.zitlab.mobyra.library.pojo.FieldCriteriaQueryFilter;
-import com.zitlab.mobyra.library.pojo.QueryFilter;
-import com.zitlab.mobyra.library.pojo.QueryResultSet;
+import com.zitlab.palmyra.ResponseCallback;
+import com.zitlab.palmyra.annotation.MobyraType;
+import com.zitlab.palmyra.auth.AuthClient;
+import com.zitlab.palmyra.auth.BasicAuthClient;
+import com.zitlab.palmyra.builder.CriteriaBuilder;
+import com.zitlab.palmyra.builder.MobyraClientBuilder;
+import com.zitlab.palmyra.builder.PaginatedQueryFilter;
+import com.zitlab.palmyra.pojo.Criteria;
+import com.zitlab.palmyra.pojo.FieldCriteriaQueryFilter;
+import com.zitlab.palmyra.pojo.QueryFilter;
+import com.zitlab.palmyra.pojo.QueryResultSet;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import static com.zitlab.mobyra.library.util.StringUtil.FORWARD_SLASH;
+import static com.zitlab.palmyra.util.StringUtil.FORWARD_SLASH;
 
 /**
  * The type Tuple rest client.

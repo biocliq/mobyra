@@ -1,4 +1,4 @@
-package com.zitlab.mobyra.library.pojo;
+package com.zitlab.palmyra.pojo;
 
 import java.util.List;
 

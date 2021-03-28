@@ -1,10 +1,10 @@
-package com.zitlab.mobyra.library.http;
+package com.zitlab.palmyra.http;
 
 import com.google.gson.Gson;
-import com.zitlab.mobyra.library.ResponseCallback;
-import com.zitlab.mobyra.library.builder.MobyraClientBuilder;
-import com.zitlab.mobyra.library.exception.PalmyraError;
-import com.zitlab.mobyra.library.exception.PalmyraException;
+import com.zitlab.palmyra.ResponseCallback;
+import com.zitlab.palmyra.builder.MobyraClientBuilder;
+import com.zitlab.palmyra.exception.PalmyraError;
+import com.zitlab.palmyra.exception.PalmyraException;
 
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
