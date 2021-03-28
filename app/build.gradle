@@ -42,9 +42,14 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
     //3rd party libraries
+    implementation 'com.libizo:customedittext:1.0.6'
+
     implementation 'com.github.markomilos:paginate:1.0.0'
     implementation 'com.pixplicity.easyprefs:library:1.9.0'
     implementation 'dev.shreyaspatil.MaterialDialog:MaterialDialog:2.1.1'
+    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
