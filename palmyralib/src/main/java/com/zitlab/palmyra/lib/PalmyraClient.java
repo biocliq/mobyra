@@ -1,6 +1,6 @@
 package com.zitlab.palmyra.lib;
 
-import com.zitlab.palmyra.builder.MobyraClientBuilder;
+import com.zitlab.palmyra.http.MobyraClientBuilder;
 import com.zitlab.palmyra.exception.PalmyraException;
 import com.zitlab.palmyra.http.PalmyraRestClient;
 

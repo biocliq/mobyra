@@ -1,10 +1,15 @@
-package com.zitlab.palmyra.builder;
+package com.zitlab.palmyra.http;
+
+import com.zitlab.palmyra.auth.AuthClient;
+import com.zitlab.palmyra.auth.BasicAuthClient;
+import com.zitlab.palmyra.util.BaseDevice;
 
 /**
  * The type Base client builder.
  */
 public final class MobyraClientBuilder {
 
+    private final String appName = "palmyra";
     /**
      * The Host name.
      */
@@ -29,10 +34,10 @@ public final class MobyraClientBuilder {
      * The Log level.
      */
     protected LogLevel logLevel = LogLevel.BASIC;
-
     private String userName;
     private String password;
-    private final String appName = "palmyra";
+    private AuthClient authClient;
+    private BaseDevice device;
     private String apiVersion = "v1";
     private String context = "apidev";
 
@@ -53,8 +58,20 @@ public final class MobyraClientBuilder {
      *
      * @return the password
      */
-    public String getPassword() {
+    String getPassword() {
         return password;
+    }
+
+    /**
+     * Gets auth client.
+     *
+     * @return the auth client
+     */
+    AuthClient getAuthClient() {
+        if (null == this.authClient) {
+            this.authClient = new BasicAuthClient();
+        }
+        return this.authClient;
     }
 
     /**
@@ -64,6 +81,15 @@ public final class MobyraClientBuilder {
      */
     public String getAppName() {
         return appName;
+    }
+
+    /**
+     * Gets device.
+     *
+     * @return the device
+     */
+    public BaseDevice getDevice() {
+        return device;
     }
 
     /**
@@ -189,7 +215,9 @@ public final class MobyraClientBuilder {
          */
         protected LogLevel logLevel;
         private String userName;
+        private AuthClient authClient;
         private String password;
+        private BaseDevice device;
         private String appName;
         private String apiVersion;
         private String context;
@@ -217,6 +245,17 @@ public final class MobyraClientBuilder {
         }
 
         /**
+         * With auth client builder.
+         *
+         * @param authClient the auth client
+         * @return the builder
+         */
+        public Builder withAuthClient(final AuthClient authClient) {
+            this.authClient = authClient;
+            return this;
+        }
+
+        /**
          * With scheme builder.
          *
          * @param scheme the scheme
@@ -235,6 +274,17 @@ public final class MobyraClientBuilder {
          */
         public Builder withApiVersion(String apiVersion) {
             this.apiVersion = apiVersion;
+            return this;
+        }
+
+        /**
+         * With device builder.
+         *
+         * @param device the device
+         * @return the builder
+         */
+        public Builder withDevice(BaseDevice device) {
+            this.device = device;
             return this;
         }
 
@@ -322,6 +372,7 @@ public final class MobyraClientBuilder {
             builder.readTimeout = this.readTimeout;
             builder.logLevel = this.logLevel;
             builder.apiVersion = this.apiVersion;
+            builder.authClient = this.authClient;
             return builder;
         }
 

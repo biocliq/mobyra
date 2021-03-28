@@ -19,7 +19,7 @@ import com.zitlab.mobyra.home.detail.student.pojo.Student;
 import com.zitlab.mobyra.library.MobyraClient;
 import com.zitlab.palmyra.ResponseCallback;
 import com.zitlab.palmyra.builder.CriteriaBuilder;
-import com.zitlab.palmyra.builder.MobyraClientBuilder;
+import com.zitlab.palmyra.http.MobyraClientBuilder;
 import com.zitlab.palmyra.exception.PalmyraException;
 import com.zitlab.palmyra.pojo.FieldCriteriaQueryFilter;
 

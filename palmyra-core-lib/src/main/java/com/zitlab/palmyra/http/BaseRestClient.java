@@ -2,9 +2,10 @@ package com.zitlab.palmyra.http;
 
 import com.google.gson.Gson;
 import com.zitlab.palmyra.ResponseCallback;
-import com.zitlab.palmyra.builder.MobyraClientBuilder;
+import com.zitlab.palmyra.auth.AuthClient;
 import com.zitlab.palmyra.exception.PalmyraError;
 import com.zitlab.palmyra.exception.PalmyraException;
+import com.zitlab.palmyra.util.BaseDevice;
 
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
@@ -35,6 +36,7 @@ public abstract class BaseRestClient {
             = MediaType.get("application/json; charset=utf-8");
     private final Gson gson = new Gson();
     private final MobyraClientBuilder builder;
+    private Map<String, String> requestHeaders;
 
 
     /**
@@ -47,11 +49,11 @@ public abstract class BaseRestClient {
     }
 
     /**
-     * Sets authentication.
+     * Gets auth client.
      *
-     * @param authHeaders the auth headers
+     * @return the auth client
      */
-    protected abstract void setAuthentication(final Map<String, String> authHeaders);
+    protected abstract AuthClient getAuthClient();
 
     private OkHttpClient getNewHttpClient() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -66,6 +68,24 @@ public abstract class BaseRestClient {
                 .build();
 
         return client;
+    }
+
+    /**
+     * Gets request headers.
+     *
+     * @return the request headers
+     */
+    public Map<String, String> getRequestHeaders() {
+        return requestHeaders;
+    }
+
+    /**
+     * Sets request headers.
+     *
+     * @param requestHeaders the request headers
+     */
+    public void setRequestHeaders(Map<String, String> requestHeaders) {
+        this.requestHeaders = requestHeaders;
     }
 
     /**
@@ -200,8 +220,7 @@ public abstract class BaseRestClient {
 
     private Request.Builder getHttpBuilder() {
         Request.Builder builder = new Request.Builder();
-        Map<String, String> headers = new HashMap<>();
-        setAuthentication(headers);
+        Map<String, String> headers = getAllRequestHeaders(getRequestHeaders());
         for (Map.Entry<String, String> entry : headers.entrySet()) {
             builder.addHeader(entry.getKey(), entry.getValue());
         }
@@ -239,11 +258,11 @@ public abstract class BaseRestClient {
     /**
      * Sends callback on main thread.
      *
-     * @param callback
-     * @param status
-     * @param response
-     * @param ex
-     * @param <T>
+     * @param <T>      the type parameter
+     * @param callback the callback
+     * @param status   the status
+     * @param response the response
+     * @param ex       the ex
      */
 //    public  <T> void sendCallback(MobyraResponseCallback callback, boolean status, T response, MobyraException ex) {
 //        new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -309,5 +328,28 @@ public abstract class BaseRestClient {
                 return null;
             }
         };
+    }
+
+    private final Map<String, String> getAllRequestHeaders(Map<String, String> requestHeaders) {
+        Map<String, String> headers = new HashMap<>();
+        BaseDevice device = builder.getDevice();
+        String deviceId = "";
+        if (null != device) {
+            deviceId = device.getDeviceId();
+        }
+        Map<String, String> authHeaders = getAuthClient().getHeaders(builder.getUserName(), builder.getPassword(), builder.getAppName(), deviceId);
+        if (null != authHeaders) {
+            for (Map.Entry<String, String> entry : authHeaders.entrySet()) {
+                headers.put(entry.getKey(), entry.getValue());
+            }
+        }
+
+        if (null != requestHeaders) {
+            for (Map.Entry<String, String> entry : requestHeaders.entrySet()) {
+                headers.put(entry.getKey(), entry.getValue());
+            }
+        }
+
+        return headers;
     }
 }

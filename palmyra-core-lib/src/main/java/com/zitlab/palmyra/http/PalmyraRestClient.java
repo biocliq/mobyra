@@ -6,19 +6,13 @@ package com.zitlab.palmyra.http;
 import com.zitlab.palmyra.ResponseCallback;
 import com.zitlab.palmyra.annotation.MobyraType;
 import com.zitlab.palmyra.auth.AuthClient;
-import com.zitlab.palmyra.auth.BasicAuthClient;
 import com.zitlab.palmyra.builder.CriteriaBuilder;
-import com.zitlab.palmyra.builder.MobyraClientBuilder;
 import com.zitlab.palmyra.builder.PaginatedQueryFilter;
 import com.zitlab.palmyra.pojo.Criteria;
 import com.zitlab.palmyra.pojo.FieldCriteriaQueryFilter;
 import com.zitlab.palmyra.pojo.QueryFilter;
 import com.zitlab.palmyra.pojo.QueryResultSet;
-
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import static com.zitlab.palmyra.util.StringUtil.FORWARD_SLASH;
 
 /**
@@ -36,7 +30,7 @@ public abstract class PalmyraRestClient extends BaseRestClient {
     private final String appName;
     private final String context;
     private final String apiVersion;
-    private final AuthClient authClient = new BasicAuthClient();
+    private final AuthClient authClient;
     private String deviceId;
 
     /**
@@ -50,6 +44,7 @@ public abstract class PalmyraRestClient extends BaseRestClient {
         password = builder.getPassword();
         appName = builder.getAppName();
         context = builder.getContext();
+        authClient = builder.getAuthClient();
         apiVersion = builder.getApiVersion();
     }
 
@@ -64,15 +59,6 @@ public abstract class PalmyraRestClient extends BaseRestClient {
         } else {
             return t.getSimpleName();
         }
-    }
-
-    /**
-     * Gets auth headers.
-     *
-     * @return the auth headers
-     */
-    public final Map<String, String> getAuthHeaders() {
-        return authClient.getHeaders(username, password, appName, deviceId);
     }
 
     //----------------- QUERY and Paginated Response ----------------------
@@ -353,11 +339,4 @@ public abstract class PalmyraRestClient extends BaseRestClient {
         return sb;
     }
 
-    @Override
-    protected final void setAuthentication(Map<String, String> headers) {
-        Map<String, String> authHeaders = getAuthHeaders();
-        for (Entry<String, String> entry : authHeaders.entrySet()) {
-            headers.put(entry.getKey(), entry.getValue());
-        }
-    }
 }
