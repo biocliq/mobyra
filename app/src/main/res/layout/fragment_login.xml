@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/logoTxt"
         app:libIZO_setBorderView="true"
         app:libIZO_setClearIconVisible="true"
-        app:libIZO_setCornerRadius="2dp"
+        app:libIZO_setCornerRadius="4dp"
         app:libIZO_setPrefix="User Name: "
         app:libIZO_setPrefixTextColor="@color/light_blue_900"
         app:libIZO_setStrokeWidth="2dp" />
@@ -76,7 +76,7 @@
         app:libIZO_setBorderView="true"
         app:libIZO_setClearIconVisible="true"
         app:libIZO_setPrefixTextColor="@color/light_blue_900"
-        app:libIZO_setCornerRadius="2dp"
+        app:libIZO_setCornerRadius="4dp"
         app:libIZO_setStrokeWidth="2dp"/>
 
     <Button

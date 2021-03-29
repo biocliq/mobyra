@@ -1,8 +1,8 @@
 package com.zitlab.mobyra.login.ui.login;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.annotation.NonNull;
 
 import com.zitlab.mobyra.login.data.LoginDataSource;
 import com.zitlab.mobyra.login.data.LoginRepository;

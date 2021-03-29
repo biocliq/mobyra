@@ -19,8 +19,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void addFragment(@IdRes int containerViewId,
-                               @NonNull Fragment fragment,
-                               @NonNull String fragmentTag) {
+                            @NonNull Fragment fragment,
+                            @NonNull String fragmentTag) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(containerViewId, fragment, fragmentTag)
@@ -29,9 +29,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void replaceFragment(@IdRes int containerViewId,
-                                   @NonNull Fragment fragment,
-                                   @NonNull String fragmentTag,
-                                   @Nullable String backStackStateName) {
+                                @NonNull Fragment fragment,
+                                @NonNull String fragmentTag,
+                                @Nullable String backStackStateName) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(containerViewId, fragment, fragmentTag)

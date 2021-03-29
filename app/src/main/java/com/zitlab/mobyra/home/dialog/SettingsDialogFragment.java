@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
@@ -77,7 +78,7 @@ public class SettingsDialogFragment extends DialogFragment implements View.OnCli
     @Override
     public void onClick(View v) {
 
-        if(v == saveBtn){
+        if (v == saveBtn) {
             String hostNameTxt = hostName.getText().toString();
             String appNameTxt = appName.getText().toString();
             String contextTxt = contextName.getText().toString();
@@ -89,7 +90,7 @@ public class SettingsDialogFragment extends DialogFragment implements View.OnCli
             getDialog().dismiss();
         }
 
-        if(v == cancelBtn){
+        if (v == cancelBtn) {
             getDialog().dismiss();
         }
     }

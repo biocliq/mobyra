@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.zitlab.mobyra.BaseActivity;
 import com.zitlab.mobyra.R;
@@ -27,12 +27,12 @@ public class HomeScrollingFragment extends Fragment {
 
         Button student = view.findViewById(R.id.studentApisButton);
         student.setOnClickListener(v -> {
-            ((BaseActivity)getActivity()).replaceFragment(R.id.fragmentContainer, StudentItemFragment.newInstance(1), StudentItemFragment.class.getSimpleName(), StudentItemFragment.class.getSimpleName());
+            ((BaseActivity) getActivity()).replaceFragment(R.id.fragmentContainer, StudentItemFragment.newInstance(1), StudentItemFragment.class.getSimpleName(), StudentItemFragment.class.getSimpleName());
         });
 
         Button marks = view.findViewById(R.id.marksApisButton);
-        marks.setOnClickListener( v -> {
-            ((BaseActivity)getActivity()).replaceFragment(R.id.fragmentContainer, MarksItemFragment.newInstance(1), MarksItemFragment.class.getSimpleName(), MarksItemFragment.class.getSimpleName());
+        marks.setOnClickListener(v -> {
+            ((BaseActivity) getActivity()).replaceFragment(R.id.fragmentContainer, MarksItemFragment.newInstance(1), MarksItemFragment.class.getSimpleName(), MarksItemFragment.class.getSimpleName());
         });
         getActivity().setTitle(getString(R.string.app_name));
         ((BaseActivity) getActivity()).hideBackButton();

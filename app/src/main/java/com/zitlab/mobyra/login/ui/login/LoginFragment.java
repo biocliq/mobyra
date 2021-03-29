@@ -1,10 +1,5 @@
 package com.zitlab.mobyra.login.ui.login;
 
-import androidx.lifecycle.ViewModelProvider;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,7 +12,15 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.zitlab.mobyra.BaseActivity;
 import com.zitlab.mobyra.R;
+import com.zitlab.mobyra.home.student.StudentListFragment;
 
 public class LoginFragment extends Fragment {
 
@@ -104,7 +107,13 @@ public class LoginFragment extends Fragment {
 
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
+
+
+        StudentListFragment fragment = StudentListFragment.newInstance(0);
+        ((BaseActivity) getActivity()).replaceFragment(R.id.fragmentContainer, fragment,
+                StudentListFragment.class.getSimpleName(), StudentListFragment.class.getSimpleName());
+
+
         if (getContext() != null && getContext().getApplicationContext() != null) {
             Toast.makeText(getContext().getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         }

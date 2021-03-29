@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zitlab.mobyra.R;
-import com.zitlab.mobyra.home.detail.student.pojo.Student;
+import com.zitlab.mobyra.home.student.Student;
 
 import java.util.List;
 

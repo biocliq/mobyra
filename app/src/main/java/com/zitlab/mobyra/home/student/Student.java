@@ -1,11 +1,11 @@
+package com.zitlab.mobyra.home.student;
 
-package com.zitlab.mobyra.home.detail.student.pojo;
-
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.zitlab.mobyra.home.detail.marks.pojo.Marks;
 import com.zitlab.palmyra.annotation.MobyraType;
+
+import java.util.List;
 
 @MobyraType("student")
 public class Student {

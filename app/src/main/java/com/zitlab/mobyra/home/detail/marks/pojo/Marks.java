@@ -1,4 +1,3 @@
-
 package com.zitlab.mobyra.home.detail.marks.pojo;
 
 import com.google.gson.annotations.Expose;

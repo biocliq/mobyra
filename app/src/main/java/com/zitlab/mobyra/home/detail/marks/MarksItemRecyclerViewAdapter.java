@@ -1,13 +1,16 @@
 package com.zitlab.mobyra.home.detail.marks;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.zitlab.mobyra.R;
 import com.zitlab.mobyra.home.detail.student.StudentItemFragment;
+
 import java.util.List;
 
 public class MarksItemRecyclerViewAdapter extends RecyclerView.Adapter<MarksItemRecyclerViewAdapter.ViewHolder> {

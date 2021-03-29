@@ -18,8 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zitlab.mobyra.BaseActivity;
 import com.zitlab.mobyra.R;
 import com.zitlab.mobyra.home.apis.APIContent;
-import com.zitlab.mobyra.home.detail.marks.MarksItemDetailsFragment;
-import com.zitlab.mobyra.home.detail.marks.MarksItemRecyclerViewAdapter;
 import com.zitlab.mobyra.home.dialog.SettingsDialogFragment;
 
 /**

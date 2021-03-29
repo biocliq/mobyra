@@ -1,4 +1,4 @@
-package com.zitlab.mobyra.home.detail.marks;
+package com.zitlab.mobyra.home.student;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,15 +8,14 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zitlab.mobyra.R;
-import com.zitlab.mobyra.home.detail.marks.pojo.Marks;
 
 import java.util.List;
 
-public class MarksItemDetailsRecyclerViewAdapter extends RecyclerView.Adapter<MarksItemDetailsRecyclerViewAdapter.ViewHolder> {
+public class StudentListRecyclerViewAdapter extends RecyclerView.Adapter<StudentListRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Marks> mValues;
+    private final List<Student> mValues;
 
-    public MarksItemDetailsRecyclerViewAdapter(List<Marks> items) {
+    public StudentListRecyclerViewAdapter(List<Student> items) {
         mValues = items;
     }
 
@@ -31,7 +30,7 @@ public class MarksItemDetailsRecyclerViewAdapter extends RecyclerView.Adapter<Ma
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText("" + mValues.get(position).getId());
-        holder.mContentView.setText("Exam: " + mValues.get(position).getExam());
+        holder.mContentView.setText("Name: " + mValues.get(position).getStudentName());
         holder.mContentSubTitle.setText("Student Code: " + mValues.get(position).getStudentCode());
         holder.mContentObject.setText(mValues.get(position).toString());
     }
@@ -45,7 +44,7 @@ public class MarksItemDetailsRecyclerViewAdapter extends RecyclerView.Adapter<Ma
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView, mContentSubTitle, mContentObject;
-        public Marks mItem;
+        public Student mItem;
 
         public ViewHolder(View view) {
             super(view);

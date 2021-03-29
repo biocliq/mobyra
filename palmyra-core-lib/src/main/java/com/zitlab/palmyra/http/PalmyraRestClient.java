@@ -90,8 +90,8 @@ public abstract class PalmyraRestClient extends BaseRestClient {
      * @param callback     the callback
      */
     public <T> void query(QueryFilter queryFilter, Class<T> responseType, ResponseCallback<QueryResultSet<T>> callback) {
-        String type = getAnnotation(responseType.getEnclosingClass());
-        post(pathUrl(type, null), queryFilter, responseType, callback);
+        String type = getAnnotation(responseType);
+        post(pathUrl(type, null), queryFilter, getType(QueryResultSet.class, responseType), callback);
     }
 
     /**
@@ -103,8 +103,8 @@ public abstract class PalmyraRestClient extends BaseRestClient {
      * @param callback     the callback
      */
     public <T> void query(PaginatedQueryFilter queryFilter, Class<T> responseType, ResponseCallback<QueryResultSet<T>> callback) {
-        String type = getAnnotation(responseType.getEnclosingClass());
-        post(pathUrl(type, null), queryFilter, responseType, callback);
+        String type = getAnnotation(responseType);
+        post(pathUrl(type, null), queryFilter, getType(QueryResultSet.class, responseType), callback);
     }
 
     //---------- Query data and response type is List without Pagination info -------------

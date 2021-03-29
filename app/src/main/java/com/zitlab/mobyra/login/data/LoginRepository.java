@@ -1,6 +1,13 @@
 package com.zitlab.mobyra.login.data;
 
+import com.zitlab.mobyra.MobyraInstance;
+import com.zitlab.mobyra.home.student.Student;
+import com.zitlab.mobyra.library.MobyraClient;
 import com.zitlab.mobyra.login.data.model.LoggedInUser;
+import com.zitlab.palmyra.builder.CriteriaBuilder;
+import com.zitlab.palmyra.builder.PaginatedQueryFilter;
+
+import java.io.IOException;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -10,8 +17,9 @@ public class LoginRepository {
 
     private static volatile LoginRepository instance;
 
-    private LoginDataSource dataSource;
-
+    private final LoginDataSource dataSource;
+    private final MobyraInstance mobyraInstance;
+    Result result;
     // If user credentials will be cached in local storage, it is recommended it be encrypted
     // @see https://developer.android.com/training/articles/keystore
     private LoggedInUser user = null;
@@ -19,6 +27,8 @@ public class LoginRepository {
     // private constructor : singleton access
     private LoginRepository(LoginDataSource dataSource) {
         this.dataSource = dataSource;
+        //Mobyra instance
+        mobyraInstance = MobyraInstance.getInstance();
     }
 
     public static LoginRepository getInstance(LoginDataSource dataSource) {
@@ -44,11 +54,20 @@ public class LoginRepository {
     }
 
     public Result<LoggedInUser> login(String username, String password) {
-        // handle login
-        Result<LoggedInUser> result = dataSource.login(username, password);
-        if (result instanceof Result.Success) {
-            setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
-        }
+        MobyraClient client = mobyraInstance.clientWithUserNamePassword(username, password);
+        PaginatedQueryFilter queryFilter = new PaginatedQueryFilter();
+        queryFilter.setLimit(4);
+        client.query(queryFilter, Student.class, (status, response, exception) -> {
+            LoggedInUser user = new LoggedInUser(username, "Raja K");
+            setLoggedInUser(user);
+            if (status) {
+                mobyraInstance.setStudents(response);
+                result = new Result.Success<>(user);
+            } else {
+                result = new Result.Error(new IOException("Error logging in."));
+            }
+        });
+
         return result;
     }
 }
