@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="Provide Student information below"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.libizo.CustomEditText
+        android:id="@+id/studentCode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:hint="Student Code"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+        app:libIZO_setBorderView="true"
+        app:libIZO_setClearIconVisible="true"
+        app:libIZO_setCornerRadius="4dp"
+        app:libIZO_setPrefix="Student Code: "
+        app:libIZO_setPrefixTextColor="@color/light_blue_900"
+        app:libIZO_setStrokeWidth="2dp" />
+
+    <com.libizo.CustomEditText
+        android:id="@+id/studentName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:hint="Student Name"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/studentCode"
+        app:libIZO_setBorderView="true"
+        app:libIZO_setClearIconVisible="true"
+        app:libIZO_setCornerRadius="4dp"
+        app:libIZO_setPrefix="Student Name: "
+        app:libIZO_setPrefixTextColor="@color/light_blue_900"
+        app:libIZO_setStrokeWidth="2dp" />
+
+    <com.libizo.CustomEditText
+        android:id="@+id/studentClass"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:hint="Student Class"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/studentName"
+        app:libIZO_setBorderView="true"
+        app:libIZO_setClearIconVisible="true"
+        app:libIZO_setCornerRadius="4dp"
+        app:libIZO_setPrefix="Student Class: "
+        app:libIZO_setPrefixTextColor="@color/light_blue_900"
+        app:libIZO_setStrokeWidth="2dp" />
+
+    <com.libizo.CustomEditText
+        android:id="@+id/studentDOB"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:hint="YYYY-MM-DD"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/studentClass"
+        app:libIZO_setBorderView="true"
+        app:libIZO_setClearIconVisible="true"
+        app:libIZO_setCornerRadius="4dp"
+        app:libIZO_setPrefix="Student DOB: "
+        app:libIZO_setPrefixTextColor="@color/light_blue_900"
+        app:libIZO_setStrokeWidth="2dp" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/studentDOB" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

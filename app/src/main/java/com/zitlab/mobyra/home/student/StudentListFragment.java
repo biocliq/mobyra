@@ -1,7 +1,9 @@
 package com.zitlab.mobyra.home.student;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,12 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zitlab.mobyra.MobyraInstance;
 import com.zitlab.mobyra.R;
+import com.zitlab.mobyra.home.student.add.AddStudentActivity;
 import com.zitlab.mobyra.library.MobyraClient;
 import com.zitlab.mobyra.listview.EndlessScrollEventListener;
 import com.zitlab.palmyra.builder.PaginatedQueryFilter;
@@ -112,6 +116,8 @@ public class StudentListFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.ic_action_add:
                 Log.d(">>>>>>", ">>>>>>> Adding Student... ");
+                Intent intent = new Intent(getActivity(), AddStudentActivity.class);
+                startActivityForResult(intent, 1);
                 break;
         }
         return true;
@@ -127,7 +133,7 @@ public class StudentListFragment extends Fragment {
         queryFilter.setTotal(true);
         client.query(queryFilter, Student.class, (status, response, exception) -> {
             if (status) {
-                response.getTotal();
+                total = response.getTotal();
                 List<Student> newList = response.getResult();
                 if (newList != null && newList.size() > 0) {
                     this.offsetSize = this.offsetSize + newList.size();
@@ -142,5 +148,20 @@ public class StudentListFragment extends Fragment {
                 Log.d(">>>>>>", ">>>>>>> Load more error.........");
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK){
+            if(data.getBooleanExtra("status", false)){
+                offsetSize = 0;
+                endlessScrollEventListener.reset();
+                items.clear();
+                loadMoreItems();
+            } else {
+
+            }
+        }
     }
 }
