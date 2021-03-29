@@ -57,6 +57,7 @@ public class LoginRepository {
         MobyraClient client = mobyraInstance.clientWithUserNamePassword(username, password);
         PaginatedQueryFilter queryFilter = new PaginatedQueryFilter();
         queryFilter.setLimit(4);
+        queryFilter.setTotal(true);
         client.query(queryFilter, Student.class, (status, response, exception) -> {
             LoggedInUser user = new LoggedInUser(username, "Raja K");
             setLoggedInUser(user);

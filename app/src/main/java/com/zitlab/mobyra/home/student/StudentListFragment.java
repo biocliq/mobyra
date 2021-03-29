@@ -5,16 +5,24 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.zitlab.mobyra.MobyraInstance;
 import com.zitlab.mobyra.R;
 import com.zitlab.mobyra.library.MobyraClient;
+import com.zitlab.mobyra.listview.EndlessScrollEventListener;
 import com.zitlab.palmyra.builder.PaginatedQueryFilter;
+import com.zitlab.palmyra.pojo.QueryResultSet;
+
 import java.util.List;
 
 /**
@@ -23,17 +31,15 @@ import java.util.List;
 public class StudentListFragment extends Fragment {
 
     private static final String ARG_ROW_INDEX = "column-count";
-    private int mRowIndex = 1;
-
+    private final int limit = 4;
+    private int total = 0, offsetSize = 0;
     private List<Student> items;
     private StudentListRecyclerViewAdapter adapter = null;
-    private LinearLayoutManager layoutManager = null;
     private RecyclerView recyclerView = null;
     private ProgressDialog pd;
-    private int offsetSize = 4;
-    private final int limit = 4;
-
     private MobyraInstance mobyraInstance;
+
+    private EndlessScrollEventListener endlessScrollEventListener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -54,10 +60,7 @@ public class StudentListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mRowIndex = getArguments().getInt(ARG_ROW_INDEX);
-        }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -73,45 +76,66 @@ public class StudentListFragment extends Fragment {
 
         Context context = view.getContext();
         recyclerView = view.findViewById(R.id.list);
-        layoutManager = new LinearLayoutManager(context);
-        recyclerView.setLayoutManager(layoutManager);
-        //recyclerView.setLayoutManager(new GridLayoutManager(context, mRowIndex));
+        QueryResultSet<Student> studentsQueryResult = MobyraInstance.getInstance().getStudents();
+        items = studentsQueryResult.getResult();
+        total = studentsQueryResult.getTotal();
 
-        items = MobyraInstance.getInstance().getStudents().getResult();
+        offsetSize = items.size();
         adapter = new StudentListRecyclerViewAdapter(items);
-        recyclerView.setAdapter(adapter);
 
-        recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(layoutManager, 4) {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
+
+        endlessScrollEventListener = new EndlessScrollEventListener(layoutManager) {
             @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                loadMoreItems(totalItemsCount);
+            public void onLoadMore(int pageNum, RecyclerView recyclerView) {
+                if (offsetSize <= total) {
+                    loadMoreItems();
+                }
             }
-        });
+        };
+
+        recyclerView.addOnScrollListener(endlessScrollEventListener);
 
         return view;
     }
 
-    private EndlessRecyclerViewScrollListener listener = new EndlessRecyclerViewScrollListener(layoutManager, 0) {
-        @Override
-        public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-            loadMoreItems(totalItemsCount);
-        }
-    };
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.student_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
-    private void loadMoreItems(int offsetSize) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.ic_action_add:
+                Log.d(">>>>>>", ">>>>>>> Adding Student... ");
+                break;
+        }
+        return true;
+
+    }
+
+    private void loadMoreItems() {
+        Log.d(">>>>>>", ">>>>>>> Loading offset index ........." + offsetSize);
         MobyraClient client = mobyraInstance.client();
         PaginatedQueryFilter queryFilter = new PaginatedQueryFilter();
-        queryFilter.setLimit(offsetSize);
+        queryFilter.setLimit(limit);
+        queryFilter.setOffset(offsetSize);
+        queryFilter.setTotal(true);
         client.query(queryFilter, Student.class, (status, response, exception) -> {
             if (status) {
+                response.getTotal();
                 List<Student> newList = response.getResult();
                 if (newList != null && newList.size() > 0) {
                     this.offsetSize = this.offsetSize + newList.size();
                     items.addAll(newList);
-                    adapter = new StudentListRecyclerViewAdapter(items);
-                    recyclerView.setAdapter(adapter);
+                    offsetSize = items.size();
+                    adapter.notifyDataSetChanged();
                 } else {
-                    Log.d(">>>>>>", ">>>>>>> Load finished.........");
+                    Log.d(">>>>>>", ">>>>>>> All records loaded successfully : " + items.size());
                     //recyclerView.removeOnScrollListener(listener);
                 }
             } else {
