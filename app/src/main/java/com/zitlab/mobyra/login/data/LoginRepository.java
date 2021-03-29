@@ -4,7 +4,6 @@ import com.zitlab.mobyra.MobyraInstance;
 import com.zitlab.mobyra.home.student.Student;
 import com.zitlab.mobyra.library.MobyraClient;
 import com.zitlab.mobyra.login.data.model.LoggedInUser;
-import com.zitlab.palmyra.builder.CriteriaBuilder;
 import com.zitlab.palmyra.builder.PaginatedQueryFilter;
 
 import java.io.IOException;
@@ -53,7 +52,7 @@ public class LoginRepository {
         // @see https://developer.android.com/training/articles/keystore
     }
 
-    public Result<LoggedInUser> login(String username, String password) {
+    public void login(String username, String password, LoginCallback callback) {
         MobyraClient client = mobyraInstance.clientWithUserNamePassword(username, password);
         PaginatedQueryFilter queryFilter = new PaginatedQueryFilter();
         queryFilter.setLimit(4);
@@ -64,11 +63,15 @@ public class LoginRepository {
             if (status) {
                 mobyraInstance.setStudents(response);
                 result = new Result.Success<>(user);
+                callback.onLoginResponse(result);
             } else {
                 result = new Result.Error(new IOException("Error logging in."));
+                callback.onLoginResponse(result);
             }
         });
+    }
 
-        return result;
+    public interface LoginCallback {
+        void onLoginResponse(Result<LoggedInUser> result);
     }
 }
