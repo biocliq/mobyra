@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The interface Mobyra type.
+ * The interface provides the Mobyra type. We will use this for creating API path url.
  *
  * @author ksvraja
  */
@@ -17,9 +17,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface MobyraType {
     /**
-     * Value string.
+     * Value of mobyra type.
      *
-     * @return the string
+     * @return the  mobyra string value.
      */
     String value();
 }

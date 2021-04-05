@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The type Palmyra auth client.
+ * The Palmyra auth client class which provides required headers for API authentication.
  */
 public class PalmyraAuthClient implements AuthClient {
 
@@ -36,6 +36,10 @@ public class PalmyraAuthClient implements AuthClient {
         return authMap;
     }
 
+    /**
+     * Gets the unique timestamp.
+     * @return Unique timestamp string value.
+     */
     private String getUniqueRef() {
         return Long.toString(new Date().getTime());
     }

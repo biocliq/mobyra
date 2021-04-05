@@ -7,7 +7,7 @@ public class PalmyraException extends Exception {
     private int code;
 
     /**
-     * Instantiates a new Http exception.
+     * Instantiates a new exception.
      *
      * @param error the error
      * @param ex    the ex

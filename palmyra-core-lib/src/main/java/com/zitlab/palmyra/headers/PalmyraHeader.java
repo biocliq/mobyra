@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The enum Palmyra header.
+ * The enum Palmyra header class defined with few pre define header enums. You can pass the enum to set palmyra headers.
  */
 public enum PalmyraHeader {
 
@@ -20,6 +20,12 @@ public enum PalmyraHeader {
     private final String key;
     private final String value;
 
+    /**
+     *Constructs palmyra header with key and value.
+     *
+     * @param key Header key.
+     * @param value Header value.
+     */
     PalmyraHeader(final String key, final String value) {
         this.key = key;
         this.value = value;
@@ -44,9 +50,9 @@ public enum PalmyraHeader {
     }
 
     /**
-     * Map map.
+     * Headers map.
      *
-     * @return the map
+     * @return the headers map.
      */
     public Map<String, String> map() {
         return new HashMap<String, String>() {{

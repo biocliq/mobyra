@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The type Basic auth client.
+ * This class provides the required headers for Basic authentication to communicate with API.
  */
 public class BasicAuthClient implements AuthClient {
     private static final String TAG_BASIC_AUTH = "Basic";

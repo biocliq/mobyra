@@ -12,6 +12,10 @@ public enum PalmyraError {
 
     private final int code;
 
+    /**
+     * The Palmyra error constructs with error code.
+     * @param code
+     */
     PalmyraError(int code) {
         this.code = code;
     }
