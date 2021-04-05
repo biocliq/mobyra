@@ -255,24 +255,37 @@ public abstract class BaseRestClient {
         getNewHttpClient().newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                callback.onMobyraResponse(false, Object.class, new PalmyraException(e));
+                ResponseStatus status = new ResponseStatus(false, 0, e.getMessage());
+                callback.onMobyraResponse(status, Object.class, new PalmyraException(e));
             }
 
             @Override
             public void onResponse(Call call, Response response) {
                 boolean isSuccess = response.isSuccessful();
+                int code = response.code();
+                String message = response.message();
+
                 if (isSuccess) {
                     try {
+                        ResponseStatus responseStatus = new ResponseStatus(isSuccess, code, message);
                         T obj = deserialize(response, valueType);
-                        sendCallback(callback, true, obj, null);
+                        sendCallback(callback, responseStatus, obj, null);
                         //callback.onMobyraResponse(true, obj, null);
                     } catch (PalmyraException e) {
-                        e.printStackTrace();
-                        sendCallback(callback, false, null, e);
+                        ResponseStatus responseStatus = new ResponseStatus(false, code, message);
+                        sendCallback(callback, responseStatus, null, e);
                         //callback.onMobyraResponse(false, null, e);
                     }
                 } else {
-                    sendCallback(callback, false, null, new PalmyraException(response.code(), response.message()));
+
+                    String respBody = null;
+                    try {
+                        respBody = response.body() != null ? response.body().string() : null;
+                    } catch (IOException e) {
+                        respBody = e.getMessage();
+                    }
+                    ResponseStatus responseStatus = new ResponseStatus(false, code, respBody);
+                    sendCallback(callback, responseStatus, null, new PalmyraException(response.code(), response.message()));
                     //callback.onMobyraResponse(false, null, new MobyraException(response.code(), response.message()));
                 }
             }
@@ -296,7 +309,7 @@ public abstract class BaseRestClient {
 //            }
 //        });
 //    }
-    protected abstract <T> void sendCallback(ResponseCallback callback, boolean status, T response, PalmyraException ex);
+    protected abstract <T> void sendCallback(ResponseCallback callback, ResponseStatus status, T response, PalmyraException ex);
 
     /**
      * Deserialize t.

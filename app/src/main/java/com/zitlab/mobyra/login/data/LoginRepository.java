@@ -60,7 +60,7 @@ public class LoginRepository {
         client.query(queryFilter, Student.class, (status, response, exception) -> {
             LoggedInUser user = new LoggedInUser(username, "Raja K");
             setLoggedInUser(user);
-            if (status) {
+            if (status.isStatus()) {
                 mobyraInstance.setStudents(response);
                 result = new Result.Success<>(user);
                 callback.onLoginResponse(result);

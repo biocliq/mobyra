@@ -117,7 +117,7 @@ public class MarksItemDetailsFragment extends Fragment {
         mobyraClient.query(criteriaBuilder, Marks.class, (ResponseCallback<QueryResultSet<Marks>>) (status, response, exception) -> {
             pd.dismiss();
 
-            if (status) {
+            if (status.isStatus()) {
                 items = response.getResult();
                 if (adapter != null) {
                     adapter = new MarksItemDetailsRecyclerViewAdapter(items);

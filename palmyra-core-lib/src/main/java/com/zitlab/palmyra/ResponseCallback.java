@@ -1,6 +1,7 @@
 package com.zitlab.palmyra;
 
 import com.zitlab.palmyra.exception.PalmyraException;
+import com.zitlab.palmyra.http.ResponseStatus;
 
 /**
  * The interface Mobyra response callback.
@@ -16,5 +17,5 @@ public interface ResponseCallback<T> {
      * @param response  the response
      * @param exception the exception
      */
-    void onMobyraResponse(boolean status, T response, PalmyraException exception);
+    void onMobyraResponse(ResponseStatus status, T response, PalmyraException exception);
 }

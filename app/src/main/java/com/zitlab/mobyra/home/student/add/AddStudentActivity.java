@@ -60,7 +60,7 @@ public class AddStudentActivity extends AppCompatActivity {
                 client.save(student, Student.class, (status, response, exception) -> {
                     pd.dismiss();
                     Intent intent = getIntent();
-                    if (status) {
+                    if (status.isStatus()) {
                         intent.putExtra("status", true);
                         setResult(RESULT_OK, intent);
                         Toast.makeText(this, "Student saved Successfully.", Toast.LENGTH_SHORT).show();

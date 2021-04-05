@@ -7,6 +7,7 @@ import com.zitlab.palmyra.ResponseCallback;
 import com.zitlab.palmyra.http.MobyraClientBuilder;
 import com.zitlab.palmyra.exception.PalmyraException;
 import com.zitlab.palmyra.http.PalmyraRestClient;
+import com.zitlab.palmyra.http.ResponseStatus;
 
 /**
  * The type Mobyra client.
@@ -25,7 +26,7 @@ public final class MobyraClient extends PalmyraRestClient {
 
 
     @Override
-    protected <T> void sendCallback(ResponseCallback callback, boolean status, T response, PalmyraException ex) {
+    protected <T> void sendCallback(ResponseCallback callback, ResponseStatus status, T response, PalmyraException ex) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {

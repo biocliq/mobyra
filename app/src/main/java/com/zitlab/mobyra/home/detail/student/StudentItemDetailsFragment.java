@@ -106,7 +106,7 @@ public class StudentItemDetailsFragment extends Fragment {
             mobyraClient.query(criteriaBuilder, Student.class, (status, response, exception) -> {
                 pd.dismiss();
 
-                if (status) {
+                if (status.isStatus()) {
                     items = response.getResult();
 
 
@@ -128,7 +128,7 @@ public class StudentItemDetailsFragment extends Fragment {
             mobyraClient.findUnique(queryFilter, Student.class, (ResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
-                if (status) {
+                if (status.isStatus()) {
                     items = new ArrayList<>();
                     items.add(response);
                     adapter = new StudentItemDetailsRecyclerViewAdapter(items);
@@ -146,7 +146,7 @@ public class StudentItemDetailsFragment extends Fragment {
             mobyraClient.query(criteriaBuilder, Student.class, (status, response, exception) -> {
                 pd.dismiss();
 
-                if (status) {
+                if (status.isStatus()) {
                     items = response.getResult();
                     adapter = new StudentItemDetailsRecyclerViewAdapter(items);
                     recyclerView.setAdapter(adapter);
@@ -163,7 +163,7 @@ public class StudentItemDetailsFragment extends Fragment {
             mobyraClient.query(criteriaBuilder, Student.class, (status, response, exception) -> {
                 pd.dismiss();
 
-                if (status) {
+                if (status.isStatus()) {
                     items = response.getResult();
                     adapter = new StudentItemDetailsRecyclerViewAdapter(items);
                     recyclerView.setAdapter(adapter);
@@ -180,7 +180,7 @@ public class StudentItemDetailsFragment extends Fragment {
             mobyraClient.query(criteriaBuilder, Student.class, (status, response, exception) -> {
                 pd.dismiss();
 
-                if (status) {
+                if (status.isStatus()) {
                     items = response.getResult();
                     adapter = new StudentItemDetailsRecyclerViewAdapter(items);
                     recyclerView.setAdapter(adapter);
@@ -197,7 +197,7 @@ public class StudentItemDetailsFragment extends Fragment {
             mobyraClient.query(criteriaBuilder, Student.class, (status, response, exception) -> {
                 pd.dismiss();
 
-                if (status) {
+                if (status.isStatus()) {
                     items = response.getResult();
                     adapter = new StudentItemDetailsRecyclerViewAdapter(items);
                     recyclerView.setAdapter(adapter);
@@ -218,7 +218,7 @@ public class StudentItemDetailsFragment extends Fragment {
             mobyraClient.save(result, Student.class, (ResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
-                if (status) {
+                if (status.isStatus()) {
                     items = new ArrayList<>();
                     adapter = new StudentItemDetailsRecyclerViewAdapter(items);
                     recyclerView.setAdapter(adapter);
@@ -249,7 +249,7 @@ public class StudentItemDetailsFragment extends Fragment {
             mobyraClient.save(result, Student.class, (ResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
-                if (status) {
+                if (status.isStatus()) {
                     items = new ArrayList<>();
                     adapter = new StudentItemDetailsRecyclerViewAdapter(items);
                     recyclerView.setAdapter(adapter);
@@ -270,7 +270,7 @@ public class StudentItemDetailsFragment extends Fragment {
             mobyraClient.save(result, Student.class, (ResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
-                if (status) {
+                if (status.isStatus()) {
                     items = new ArrayList<>();
                     adapter = new StudentItemDetailsRecyclerViewAdapter(items);
                     recyclerView.setAdapter(adapter);
@@ -291,7 +291,7 @@ public class StudentItemDetailsFragment extends Fragment {
             mobyraClient.save(result, Student.class, (ResponseCallback<Student>) (status, response, exception) -> {
                 pd.dismiss();
 
-                if (status) {
+                if (status.isStatus()) {
                     items = new ArrayList<>();
                     items.add(response);
                     adapter = new StudentItemDetailsRecyclerViewAdapter(items);
@@ -307,7 +307,7 @@ public class StudentItemDetailsFragment extends Fragment {
             mobyraClient.query(criteriaBuilder, Student.class, (status, response, exception) -> {
                 pd.dismiss();
 
-                if (status) {
+                if (status.isStatus()) {
                     items = response.getResult();
                     adapter = new StudentItemDetailsRecyclerViewAdapter(items);
                     recyclerView.setAdapter(adapter);

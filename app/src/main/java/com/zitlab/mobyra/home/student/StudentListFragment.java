@@ -16,11 +16,14 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zitlab.mobyra.MobyraInstance;
 import com.zitlab.mobyra.R;
+import com.zitlab.mobyra.home.dialog.FilterDialogFragment;
+import com.zitlab.mobyra.home.dialog.SettingsDialogFragment;
 import com.zitlab.mobyra.home.student.add.AddStudentActivity;
 import com.zitlab.mobyra.library.MobyraClient;
 import com.zitlab.mobyra.listview.EndlessScrollEventListener;
@@ -119,9 +122,19 @@ public class StudentListFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), AddStudentActivity.class);
                 startActivityForResult(intent, 1);
                 break;
+            case R.id.ic_action_filter:
+                Log.d(">>>>>>", ">>>>>>> Adding filter to Student list... ");
+                showFilterSettingsPopUp();
+                break;
         }
         return true;
 
+    }
+
+    private void showFilterSettingsPopUp() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        FilterDialogFragment dialogFragment = FilterDialogFragment.newInstance("Filter");
+        dialogFragment.show(fm, "FilterDialogFragment");
     }
 
     private void loadMoreItems() {
@@ -132,7 +145,7 @@ public class StudentListFragment extends Fragment {
         queryFilter.setOffset(offsetSize);
         queryFilter.setTotal(true);
         client.query(queryFilter, Student.class, (status, response, exception) -> {
-            if (status) {
+            if (status.isStatus()) {
                 total = response.getTotal();
                 List<Student> newList = response.getResult();
                 if (newList != null && newList.size() > 0) {

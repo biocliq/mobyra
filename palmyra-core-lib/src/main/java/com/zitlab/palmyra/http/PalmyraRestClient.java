@@ -42,8 +42,9 @@ public abstract class PalmyraRestClient extends BaseRestClient {
         super(builder);
         appName = builder.getAppName();
         context = builder.getContext();
-        authClient = builder.getAuthClient();
         apiVersion = builder.getApiVersion();
+
+        authClient = builder.getAuthClient();
     }
 
     /**
