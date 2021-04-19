@@ -1,4 +1,5 @@
 package com.zitlab.mobyra.home;
 
-public class OnItemClickListener {
+public interface OnItemClickListener<T> {
+    void onItemClick(T item);
 }

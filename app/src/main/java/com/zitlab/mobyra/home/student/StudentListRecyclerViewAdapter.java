@@ -8,15 +8,18 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zitlab.mobyra.R;
+import com.zitlab.mobyra.home.OnItemClickListener;
 
 import java.util.List;
 
 public class StudentListRecyclerViewAdapter extends RecyclerView.Adapter<StudentListRecyclerViewAdapter.ViewHolder> {
 
     private final List<Student> mValues;
+    private final OnItemClickListener<Student> itemClickListener;
 
-    public StudentListRecyclerViewAdapter(List<Student> items) {
+    public StudentListRecyclerViewAdapter(List<Student> items, OnItemClickListener<Student> listener) {
         mValues = items;
+        this.itemClickListener = listener;
     }
 
     @Override
@@ -33,6 +36,10 @@ public class StudentListRecyclerViewAdapter extends RecyclerView.Adapter<Student
         holder.mContentView.setText("Name: " + mValues.get(position).getStudentName());
         holder.mContentSubTitle.setText("Student Code: " + mValues.get(position).getStudentCode());
         holder.mContentObject.setText(mValues.get(position).toString());
+
+        holder.mView.setOnClickListener(v -> {
+            itemClickListener.onItemClick(holder.mItem);
+        });
     }
 
     @Override
@@ -53,6 +60,7 @@ public class StudentListRecyclerViewAdapter extends RecyclerView.Adapter<Student
             mContentView = view.findViewById(R.id.contentTitle);
             mContentSubTitle = view.findViewById(R.id.contentSubTitle);
             mContentObject = view.findViewById(R.id.contentObject);
+
         }
 
         @Override

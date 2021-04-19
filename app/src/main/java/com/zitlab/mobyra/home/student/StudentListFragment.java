@@ -15,21 +15,28 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.zitlab.mobyra.BaseActivity;
 import com.zitlab.mobyra.MobyraInstance;
 import com.zitlab.mobyra.R;
+import com.zitlab.mobyra.home.OnItemClickListener;
 import com.zitlab.mobyra.home.dialog.FilterDialogFragment;
+import com.zitlab.mobyra.home.marks.MarksItemFragment;
 import com.zitlab.mobyra.home.student.add.AddStudentActivity;
 import com.zitlab.mobyra.library.MobyraClient;
 import com.zitlab.mobyra.listview.EndlessScrollEventListener;
+import com.zitlab.palmyra.builder.CriteriaBuilder;
 import com.zitlab.palmyra.builder.PaginatedQueryFilter;
 import com.zitlab.palmyra.pojo.QueryResultSet;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * A fragment representing a list of Items.
@@ -44,6 +51,9 @@ public class StudentListFragment extends Fragment {
     private RecyclerView recyclerView = null;
     private ProgressDialog pd;
     private MobyraInstance mobyraInstance;
+    private CriteriaBuilder criteriaFilter;
+
+    private boolean isFilterEnabled = false;
 
     private EndlessScrollEventListener endlessScrollEventListener;
 
@@ -74,8 +84,12 @@ public class StudentListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        mobyraInstance = MobyraInstance.getInstance();
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        actionBar.setTitle("Student");
+        // actionBar.setDisplayHomeAsUpEnabled(true);
+        // actionBar.setHomeButtonEnabled(true);
 
+        mobyraInstance = MobyraInstance.getInstance();
         pd = new ProgressDialog(getContext());
         TextView criteriaText = view.findViewById(R.id.criteriaText);
         // Set the adapter
@@ -87,7 +101,11 @@ public class StudentListFragment extends Fragment {
         total = studentsQueryResult.getTotal();
 
         offsetSize = items.size();
-        adapter = new StudentListRecyclerViewAdapter(items);
+        adapter = new StudentListRecyclerViewAdapter(items, item -> {
+            MarksItemFragment fragment = MarksItemFragment.newInstance(item.getStudentCode());
+            ((BaseActivity) getActivity()).replaceFragment(R.id.fragmentContainer, fragment,
+                    MarksItemFragment.class.getSimpleName(), MarksItemFragment.class.getSimpleName());
+        });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(adapter);
@@ -97,7 +115,11 @@ public class StudentListFragment extends Fragment {
             @Override
             public void onLoadMore(int pageNum, RecyclerView recyclerView) {
                 if (offsetSize <= total) {
-                    loadMoreItems();
+                    if(isFilterEnabled) {
+                        loadMoreItems();
+                    }else{
+                        loadMoreFilteredItems(criteriaFilter);
+                    }
                 }
             }
         };
@@ -115,6 +137,9 @@ public class StudentListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                break;
             case R.id.ic_action_add:
                 Log.d(">>>>>>", ">>>>>>> Adding Student... ");
                 Intent intent = new Intent(getActivity(), AddStudentActivity.class);
@@ -132,7 +157,22 @@ public class StudentListFragment extends Fragment {
     private void showFilterSettingsPopUp() {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         FilterDialogFragment dialogFragment = FilterDialogFragment.newInstance("Filter");
-        dialogFragment.show(fm, "FilterDialogFragment");
+        dialogFragment.show(fm, "FilterDialogFragment", new FilterDialogFragment.OnDialogButtonClick() {
+            @Override
+            public void onPositiveClick(CriteriaBuilder filter) {
+                isFilterEnabled = true;
+                criteriaFilter = filter;
+                offsetSize = 0;
+                endlessScrollEventListener.reset();
+                items.clear();
+                loadMoreFilteredItems(filter);
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+        });
     }
 
     private void loadMoreItems() {
@@ -174,5 +214,32 @@ public class StudentListFragment extends Fragment {
 
             }
         }
+    }
+
+    private void loadMoreFilteredItems(CriteriaBuilder criteriaBuilder) {
+        Log.d(">>>>>>", ">>>>>>> Loading offset index ........." + offsetSize);
+        MobyraClient client = mobyraInstance.client();
+        PaginatedQueryFilter queryFilter = new PaginatedQueryFilter();
+        queryFilter.setLimit(limit);
+        queryFilter.setOffset(offsetSize);
+        queryFilter.setTotal(true);
+        queryFilter.setCriteria(criteriaBuilder);
+        client.query(queryFilter, Student.class, (status, response, exception) -> {
+            if (status.isStatus()) {
+                total = response.getTotal();
+                List<Student> newList = response.getResult();
+                if (newList != null && newList.size() > 0) {
+                    this.offsetSize = this.offsetSize + newList.size();
+                    items.addAll(newList);
+                    offsetSize = items.size();
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Log.d(">>>>>>", ">>>>>>> All records loaded successfully : " + items.size());
+                    //recyclerView.removeOnScrollListener(listener);
+                }
+            } else {
+                Log.d(">>>>>>", ">>>>>>> Load more error.........");
+            }
+        });
     }
 }

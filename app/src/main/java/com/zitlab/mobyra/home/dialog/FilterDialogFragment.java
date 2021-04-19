@@ -7,19 +7,25 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.pixplicity.easyprefs.library.Prefs;
-import com.zitlab.mobyra.Constants;
 import com.zitlab.mobyra.R;
+import com.zitlab.palmyra.builder.CriteriaBuilder;
+
+import java.util.Map;
 
 public class FilterDialogFragment extends DialogFragment implements View.OnClickListener {
 
-    private EditText hostName, appName, contextName;
+    private EditText editTextFieldName, editTextFieldValue;
+    private Spinner spinnerOperation;
     private Button saveBtn, cancelBtn;
-
+    private OnDialogButtonClick listener;
 
     public FilterDialogFragment() {
         // Empty constructor is required for DialogFragment
@@ -52,13 +58,9 @@ public class FilterDialogFragment extends DialogFragment implements View.OnClick
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
-        hostName = view.findViewById(R.id.editTextHostName);
-        appName = view.findViewById(R.id.editTextAppName);
-        contextName = view.findViewById(R.id.editTextContextName);
-
-        hostName.setText(Prefs.getString(Constants.KEY_HOST_NAME, ""));
-        appName.setText(Prefs.getString(Constants.KEY_APP_NAME, ""));
-        contextName.setText(Prefs.getString(Constants.KEY_CONTEXT_NAME, ""));
+        editTextFieldName = view.findViewById(R.id.editTextFieldName);
+        spinnerOperation = view.findViewById(R.id.spinnerOperation);
+        editTextFieldValue = view.findViewById(R.id.editTextFieldValue);
 
         saveBtn = view.findViewById(R.id.saveButton);
         saveBtn.setOnClickListener(this);
@@ -76,22 +78,60 @@ public class FilterDialogFragment extends DialogFragment implements View.OnClick
     }
 
     @Override
+    public int show(@NonNull FragmentTransaction transaction, @Nullable String tag) {
+        return super.show(transaction, tag);
+    }
+
+    public void show(@NonNull FragmentManager manager, @NonNull String tag,  OnDialogButtonClick listener) {
+        super.show(manager, tag);
+        this.listener = listener;
+    }
+
+    @Override
     public void onClick(View v) {
 
         if (v == saveBtn) {
-            String hostNameTxt = hostName.getText().toString();
-            String appNameTxt = appName.getText().toString();
-            String contextTxt = contextName.getText().toString();
+            CriteriaBuilder builder = null;
+            if(spinnerOperation.getSelectedItemPosition() == 0){
+                builder = new CriteriaBuilder.Builder()
+                        .keyValue(editTextFieldName.getText().toString(), editTextFieldValue.getText().toString())
+                        .build();
+            }else  if(spinnerOperation.getSelectedItemPosition() == 1){
+                builder = new CriteriaBuilder.Builder()
+                        .keyValueNot(editTextFieldName.getText().toString(), editTextFieldValue.getText().toString())
+                        .build();
+            }else  if(spinnerOperation.getSelectedItemPosition() == 2){
+                builder = new CriteriaBuilder.Builder()
+                        .keyValueGreaterThan(editTextFieldName.getText().toString(), editTextFieldValue.getText().toString())
+                        .build();
+            }else  if(spinnerOperation.getSelectedItemPosition() == 3){
+                builder = new CriteriaBuilder.Builder()
+                        .keyValueGreaterThanOrEqual(editTextFieldName.getText().toString(), editTextFieldValue.getText().toString())
+                        .build();
+            }else  if(spinnerOperation.getSelectedItemPosition() == 4){
+                builder = new CriteriaBuilder.Builder()
+                        .keyValueLessThan(editTextFieldName.getText().toString(), editTextFieldValue.getText().toString())
+                        .build();
+            }else  if(spinnerOperation.getSelectedItemPosition() == 5){
+                builder = new CriteriaBuilder.Builder()
+                        .keyValueLessThanOrEqual(editTextFieldName.getText().toString(), editTextFieldValue.getText().toString())
+                        .build();
+            }
 
-            Prefs.putString(Constants.KEY_HOST_NAME, hostNameTxt);
-            Prefs.putString(Constants.KEY_APP_NAME, appNameTxt);
-            Prefs.putString(Constants.KEY_CONTEXT_NAME, contextTxt);
-
+            listener.onPositiveClick(builder);
             getDialog().dismiss();
         }
 
         if (v == cancelBtn) {
+            listener.onNegativeClick();
             getDialog().dismiss();
         }
+    }
+
+    public interface  OnDialogButtonClick {
+
+        void onPositiveClick(CriteriaBuilder filter);
+
+        void onNegativeClick();
     }
 }

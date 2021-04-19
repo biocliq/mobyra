@@ -27,49 +27,47 @@
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Student Name"
+        android:text="Field Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
     <EditText
-        android:id="@+id/editTextHostName"
+        android:id="@+id/editTextFieldName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:inputType="textNoSuggestions|textUri"
-        android:hint="Student name"
+        android:hint="Field name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textHostName" />
 
+
     <TextView
-        android:id="@+id/textAppName"
+        android:id="@+id/textOperator"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Student ID"
+        android:text="Select Operator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextHostName" />
-
-    <EditText
-        android:id="@+id/editTextAppName"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFieldName" />
+    <Spinner
+        android:id="@+id/spinnerOperation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Student ID"
+        android:entries="@array/spinner_entries"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAppName" />
+        app:layout_constraintTop_toBottomOf="@+id/textOperator" />
 
     <TextView
         android:id="@+id/textContext"
@@ -80,20 +78,20 @@
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="DOB"
+        android:text="Field Value"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextAppName" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerOperation" />
 
     <EditText
-        android:id="@+id/editTextContextName"
+        android:id="@+id/editTextFieldValue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Date Of Birth"
+        android:hint="Field value"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textContext" />
@@ -106,10 +104,10 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:text="Update"
+        android:text="Update Filter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextContextName" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextFieldValue" />
 
     <Button
         android:id="@+id/cancelButton"

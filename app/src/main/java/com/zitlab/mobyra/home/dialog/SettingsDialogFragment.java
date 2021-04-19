@@ -52,9 +52,9 @@ public class SettingsDialogFragment extends DialogFragment implements View.OnCli
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
-        hostName = view.findViewById(R.id.editTextHostName);
+        hostName = view.findViewById(R.id.editTextFieldName);
         appName = view.findViewById(R.id.editTextAppName);
-        contextName = view.findViewById(R.id.editTextContextName);
+        contextName = view.findViewById(R.id.editTextFieldValue);
 
         hostName.setText(Prefs.getString(Constants.KEY_HOST_NAME, ""));
         appName.setText(Prefs.getString(Constants.KEY_APP_NAME, ""));
