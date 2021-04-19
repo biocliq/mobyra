@@ -50,10 +50,10 @@ public class StudentItemDetailsRecyclerViewAdapter extends RecyclerView.Adapter<
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.contentTitle);
-            mContentSubTitle = (TextView) view.findViewById(R.id.contentSubTitle);
-            mContentObject = (TextView) view.findViewById(R.id.contentObject);
+            mIdView = view.findViewById(R.id.item_number);
+            mContentView = view.findViewById(R.id.contentTitle);
+            mContentSubTitle = view.findViewById(R.id.contentSubTitle);
+            mContentObject = view.findViewById(R.id.contentObject);
         }
 
         @Override

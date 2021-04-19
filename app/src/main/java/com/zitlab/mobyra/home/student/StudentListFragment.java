@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zitlab.mobyra.MobyraInstance;
 import com.zitlab.mobyra.R;
 import com.zitlab.mobyra.home.dialog.FilterDialogFragment;
-import com.zitlab.mobyra.home.dialog.SettingsDialogFragment;
 import com.zitlab.mobyra.home.student.add.AddStudentActivity;
 import com.zitlab.mobyra.library.MobyraClient;
 import com.zitlab.mobyra.listview.EndlessScrollEventListener;
@@ -102,7 +101,6 @@ public class StudentListFragment extends Fragment {
                 }
             }
         };
-
         recyclerView.addOnScrollListener(endlessScrollEventListener);
 
         return view;
@@ -166,8 +164,8 @@ public class StudentListFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        if(requestCode == 1 && resultCode == Activity.RESULT_OK){
-            if(data.getBooleanExtra("status", false)){
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            if (data.getBooleanExtra("status", false)) {
                 offsetSize = 0;
                 endlessScrollEventListener.reset();
                 items.clear();

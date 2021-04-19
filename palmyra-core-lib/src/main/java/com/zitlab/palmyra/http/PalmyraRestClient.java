@@ -83,6 +83,18 @@ public abstract class PalmyraRestClient extends BaseRestClient {
     }
 
     /**
+     *
+     * @param requestObject
+     * @param responseType
+     * @param callback
+     * @param <T>
+     */
+    public <T> void query(Object requestObject, Class<T> responseType, ResponseCallback<QueryResultSet<T>> callback) {
+        String type = getAnnotation(responseType);
+        post(pathUrl(type, null), requestObject, getType(QueryResultSet.class, responseType), callback);
+    }
+
+    /**
      * Query.
      *
      * @param <T>          the type parameter

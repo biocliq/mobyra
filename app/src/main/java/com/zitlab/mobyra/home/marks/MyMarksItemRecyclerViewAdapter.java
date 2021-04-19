@@ -1,6 +1,5 @@
-package com.zitlab.mobyra.home.detail.marks;
+package com.zitlab.mobyra.home.marks;
 
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,38 +8,34 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zitlab.mobyra.R;
-import com.zitlab.mobyra.home.detail.student.StudentItemFragment;
+import com.zitlab.mobyra.home.marks.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
-public class MarksItemRecyclerViewAdapter extends RecyclerView.Adapter<MarksItemRecyclerViewAdapter.ViewHolder> {
+/**
+ * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
+ * TODO: Replace the implementation with code for your data type.
+ */
+public class MyMarksItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMarksItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Pair<String, String>> mValues;
-    StudentItemFragment.OnCardClickListner onCardClickListner;
+    private final List<DummyItem> mValues;
 
-    public MarksItemRecyclerViewAdapter(List<Pair<String, String>> items) {
+    public MyMarksItemRecyclerViewAdapter(List<DummyItem> items) {
         mValues = items;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item, parent, false);
+                .inflate(R.layout.fragment_marks_item, parent, false);
         return new ViewHolder(view);
-    }
-
-    public void setCardClickListener(StudentItemFragment.OnCardClickListner listener) {
-        this.onCardClickListner = listener;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText("" + (position + 1));
-        holder.mContentView.setText(mValues.get(position).first);
-        holder.mSubContentView.setText(mValues.get(position).second);
-
-        holder.mView.setOnClickListener(v -> onCardClickListner.OnCardClicked(v, position));
+        holder.mIdView.setText(mValues.get(position).id);
+        holder.mContentView.setText(mValues.get(position).content);
     }
 
     @Override
@@ -52,15 +47,13 @@ public class MarksItemRecyclerViewAdapter extends RecyclerView.Adapter<MarksItem
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public final TextView mSubContentView;
-        public Pair<String, String> mItem;
+        public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mIdView = view.findViewById(R.id.item_number);
             mContentView = view.findViewById(R.id.content);
-            mSubContentView = view.findViewById(R.id.sub_content);
         }
 
         @Override

@@ -15,10 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zitlab.mobyra.R;
 import com.zitlab.mobyra.home.detail.marks.pojo.Marks;
 import com.zitlab.mobyra.library.MobyraClient;
-import com.zitlab.palmyra.ResponseCallback;
 import com.zitlab.palmyra.builder.CriteriaBuilder;
 import com.zitlab.palmyra.http.MobyraClientBuilder;
-import com.zitlab.palmyra.pojo.QueryResultSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +69,7 @@ public class MarksItemDetailsFragment extends Fragment {
         // Set the adapter
 
         Context context = view.getContext();
-        recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        recyclerView = view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         //recyclerView.setLayoutManager(new GridLayoutManager(context, mRowIndex));
 
@@ -114,7 +112,7 @@ public class MarksItemDetailsFragment extends Fragment {
         MobyraClient mobyraClient = new MobyraClient(builder);
         //----------------------------------------
 
-        mobyraClient.query(criteriaBuilder, Marks.class, (ResponseCallback<QueryResultSet<Marks>>) (status, response, exception) -> {
+        mobyraClient.query(criteriaBuilder, Marks.class, (status, response, exception) -> {
             pd.dismiss();
 
             if (status.isStatus()) {

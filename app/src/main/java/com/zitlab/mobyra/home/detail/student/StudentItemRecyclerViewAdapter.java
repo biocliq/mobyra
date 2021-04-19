@@ -39,7 +39,7 @@ public class StudentItemRecyclerViewAdapter extends RecyclerView.Adapter<Student
         holder.mContentView.setText(mValues.get(position).first);
         holder.mSubContentView.setText(mValues.get(position).second);
 
-        holder.mView.setOnClickListener((View.OnClickListener) v -> onCardClickListner.OnCardClicked(v, position));
+        holder.mView.setOnClickListener(v -> onCardClickListner.OnCardClicked(v, position));
     }
 
     @Override
@@ -57,9 +57,9 @@ public class StudentItemRecyclerViewAdapter extends RecyclerView.Adapter<Student
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
-            mSubContentView = (TextView) view.findViewById(R.id.sub_content);
+            mIdView = view.findViewById(R.id.item_number);
+            mContentView = view.findViewById(R.id.content);
+            mSubContentView = view.findViewById(R.id.sub_content);
         }
 
         @Override

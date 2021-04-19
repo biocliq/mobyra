@@ -15,8 +15,6 @@ import com.zitlab.mobyra.R;
 import com.zitlab.mobyra.home.student.Student;
 import com.zitlab.mobyra.library.MobyraClient;
 
-import java.util.Date;
-
 public class AddStudentActivity extends AppCompatActivity {
     MobyraInstance mobyraInstance;
     ProgressDialog pd;
