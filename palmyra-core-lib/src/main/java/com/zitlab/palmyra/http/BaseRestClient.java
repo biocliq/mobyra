@@ -126,6 +126,7 @@ public abstract class BaseRestClient {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme(builder.getScheme())
                 .host(builder.getHostName())
+                .port(builder.getPortNumber())
                 .addPathSegment(path)
                 .build();
         Request request = getHttpBuilder().url(url).build();

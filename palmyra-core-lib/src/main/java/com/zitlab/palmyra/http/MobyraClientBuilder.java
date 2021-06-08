@@ -14,6 +14,11 @@ public final class MobyraClientBuilder {
      * The Host name.
      */
     protected String hostName;
+
+    /**
+     * The port number
+     */
+    protected int port;
     /**
      * The Scheme.
      */
@@ -74,6 +79,10 @@ public final class MobyraClientBuilder {
         return this.authClient;
     }
 
+
+    public int getPortNumber(){
+        return port;
+    }
     /**
      * Gets app name.
      *
@@ -221,6 +230,7 @@ public final class MobyraClientBuilder {
         private String appName;
         private String apiVersion;
         private String context;
+        private int port;
 
         /**
          * Instantiates a new Builder.
@@ -229,6 +239,11 @@ public final class MobyraClientBuilder {
          */
         public Builder(String hostName) {
             this.hostName = hostName;
+        }
+
+        public Builder withPort(int port) {
+            this.port = port;
+            return this;
         }
 
         /**
@@ -366,6 +381,7 @@ public final class MobyraClientBuilder {
             builder.password = this.password;
             builder.context = this.context;
             builder.hostName = this.hostName;
+            builder.port = this.port;
             builder.scheme = this.scheme;
             builder.connectionTimeout = this.connectionTimeout;
             builder.writeTimeout = this.writeTimeout;
