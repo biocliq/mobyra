@@ -9,7 +9,7 @@ import com.zitlab.palmyra.util.BaseDevice;
  */
 public final class MobyraClientBuilder {
 
-    private final String appName = "palmyra";
+    private String appName = "palmyra";
     /**
      * The Host name.
      */
@@ -389,6 +389,7 @@ public final class MobyraClientBuilder {
             builder.logLevel = this.logLevel;
             builder.apiVersion = this.apiVersion;
             builder.authClient = this.authClient;
+            builder.appName = this.appName;
             return builder;
         }
 

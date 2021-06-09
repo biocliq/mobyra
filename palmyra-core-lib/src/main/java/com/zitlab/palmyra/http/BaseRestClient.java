@@ -127,7 +127,7 @@ public abstract class BaseRestClient {
                 .scheme(builder.getScheme())
                 .host(builder.getHostName())
                 .port(builder.getPortNumber())
-                .addPathSegment(path)
+                .addPathSegments(path)
                 .build();
         Request request = getHttpBuilder().url(url).build();
         executeRequest(request, responseType, callback);
@@ -164,7 +164,7 @@ public abstract class BaseRestClient {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme(builder.getScheme())
                 .host(builder.getHostName())
-                .addPathSegment(path)
+                .addPathSegments(path)
                 .build();
 
         RequestBody body = RequestBody.create(jsonData, JSON);
@@ -205,7 +205,7 @@ public abstract class BaseRestClient {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme(builder.getScheme())
                 .host(builder.getHostName())
-                .addPathSegment(path)
+                .addPathSegments(path)
                 .build();
 
         RequestBody body = RequestBody.create(jsonData, JSON);
@@ -232,7 +232,7 @@ public abstract class BaseRestClient {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme(builder.getScheme())
                 .host(builder.getHostName())
-                .addPathSegment(path)
+                .addPathSegments(path)
                 .build();
 
         Request request = getHttpBuilder()
