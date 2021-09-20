@@ -17,5 +17,9 @@ public interface ResponseCallback<T> {
      * @param response  the response
      * @param exception the exception
      */
-    void onMobyraResponse(ResponseStatus status, T response, PalmyraException exception);
+    public void onMobyraResponse(ResponseStatus status, T response, PalmyraException exception);
+
+    public default void onFailure(ResponseStatus status, RuntimeException e){
+        throw e;
+    }
 }

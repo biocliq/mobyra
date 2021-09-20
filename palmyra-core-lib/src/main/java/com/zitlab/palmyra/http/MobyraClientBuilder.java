@@ -9,7 +9,7 @@ import com.zitlab.palmyra.util.BaseDevice;
  */
 public final class MobyraClientBuilder {
 
-    private final String appName = "palmyra";
+    private final String appName = "fluwiz";
     /**
      * The Host name.
      */

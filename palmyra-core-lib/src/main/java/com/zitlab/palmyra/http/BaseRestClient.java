@@ -126,7 +126,7 @@ public abstract class BaseRestClient {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme(builder.getScheme())
                 .host(builder.getHostName())
-                .addPathSegment(path)
+                .addPathSegments(path)
                 .build();
         Request request = getHttpBuilder().url(url).build();
         executeRequest(request, responseType, callback);
@@ -145,6 +145,7 @@ public abstract class BaseRestClient {
      */
     protected void post(final String path, final Object obj, final Type responseType, final ResponseCallback callback) {
         String requestBody = gson.toJson(obj);
+
         this.post(path, requestBody, responseType, callback);
     }
 
@@ -163,7 +164,7 @@ public abstract class BaseRestClient {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme(builder.getScheme())
                 .host(builder.getHostName())
-                .addPathSegment(path)
+                .addPathSegments(path)
                 .build();
 
         RequestBody body = RequestBody.create(jsonData, JSON);
@@ -256,7 +257,7 @@ public abstract class BaseRestClient {
             @Override
             public void onFailure(Call call, IOException e) {
                 ResponseStatus status = new ResponseStatus(false, 0, e.getMessage());
-                callback.onMobyraResponse(status, Object.class, new PalmyraException(e));
+                callback.onFailure(status, new RuntimeException(e));
             }
 
             @Override

@@ -115,11 +115,7 @@ public class StudentListFragment extends Fragment {
             @Override
             public void onLoadMore(int pageNum, RecyclerView recyclerView) {
                 if (offsetSize <= total) {
-                    if(isFilterEnabled) {
-                        loadMoreItems();
-                    }else{
-                        loadMoreFilteredItems(criteriaFilter);
-                    }
+                    loadItems();
                 }
             }
         };
@@ -165,14 +161,27 @@ public class StudentListFragment extends Fragment {
                 offsetSize = 0;
                 endlessScrollEventListener.reset();
                 items.clear();
-                loadMoreFilteredItems(filter);
+                loadItems();
             }
 
             @Override
             public void onNegativeClick() {
-
+                isFilterEnabled = false;
+                criteriaFilter = null;
+                offsetSize = 0;
+                endlessScrollEventListener.reset();
+                items.clear();
+                loadItems();
             }
         });
+    }
+
+    private void loadItems(){
+        if(null == criteriaFilter) {
+            loadMoreItems();
+        }else{
+            loadMoreFilteredItems(criteriaFilter);
+        }
     }
 
     private void loadMoreItems() {
@@ -209,7 +218,7 @@ public class StudentListFragment extends Fragment {
                 offsetSize = 0;
                 endlessScrollEventListener.reset();
                 items.clear();
-                loadMoreItems();
+                loadItems();
             } else {
 
             }
